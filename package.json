@@ -150,5 +150,8 @@
     "type": "legacy-module",
     "languages": "kotlin-swift",
     "version": "0.49.6"
+  },
+  "resolutions": {
+    "use-latest-callback": "^0.2.3"
   }
 }

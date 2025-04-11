@@ -1,25 +1,33 @@
-import { multiply } from 'react-native-rozetka-pay-sdk';
-import { Text, View, StyleSheet } from 'react-native';
-import { useState, useEffect } from 'react';
+import { Provider as PaperProvider, Surface } from 'react-native-paper';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import RozetkaPayTheme from './theme/Theme';
+import MainScreen from './screens/main/MainScreen';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
-
-  useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+
+    <PaperProvider
+      settings={{
+        icon: props => <MaterialIcons {...props} />,
+      }}
+      theme={RozetkaPayTheme}
+    >
+      <StatusBar
+        backgroundColor={RozetkaPayTheme.colors.background}
+        barStyle="dark-content"
+      />
+      <Surface style={{ height: "100%", backgroundColor: RozetkaPayTheme.colors.background }} elevation={0}>
+        <SafeAreaView style={styles.container}>
+          <MainScreen />
+        </SafeAreaView>
+      </Surface>
+    </PaperProvider >
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  }
 });
