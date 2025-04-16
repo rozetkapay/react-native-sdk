@@ -1,4 +1,7 @@
 import { NativeModules, Platform } from 'react-native';
+import { convertToTokenizationResult } from './models/tokenization/TokenizationResultConverter';
+import type { InitParams } from './models/initialization/InitParameters';
+import { defaultTokenizationFieldsParameters, type TokenizationParams } from './models/tokenization/TokenizationParameters';
 
 const LINKING_ERROR =
   `The package 'react-native-rozetka-pay-sdk' doesn't seem to be linked. Make sure: \n\n` +
@@ -9,14 +12,39 @@ const LINKING_ERROR =
 const RozetkaPaySdk = NativeModules.RozetkaPaySdk
   ? NativeModules.RozetkaPaySdk
   : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+    {},
+    {
+      get() {
+        throw new Error(LINKING_ERROR);
+      },
+    }
+  );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return RozetkaPaySdk.multiply(a, b);
+
+/**
+ * Initializes the RozetkaPaySdk with the given parameters.
+ * @param params - The parameters for initialization.
+ */
+export function init(params: InitParams): Promise<void> {
+  if (Platform.OS === 'android') {
+    return RozetkaPaySdk.init(params.mode, params.enableLogging);
+  } else {
+    throw new Error('init function is only supported on Android.');
+  }
 }
+
+/**
+ * Starts the tokenization process using the provided widget key.
+ * @param params - The parameters for tokenization.
+ * @returns A promise that resolves with the tokenization result.
+ */
+export function startTokenization({ widgetKey, fieldsParameters = defaultTokenizationFieldsParameters }: TokenizationParams): Promise<any> {
+  return RozetkaPaySdk
+    .startTokenization(widgetKey, fieldsParameters)
+    .then(convertToTokenizationResult);
+}
+
+export default {
+  init,
+  startTokenization,
+};

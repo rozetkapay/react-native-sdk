@@ -1,12 +1,33 @@
 import { Provider as PaperProvider, Surface } from 'react-native-paper';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
-import RozetkaPayTheme from './theme/Theme';
+import RozetkaPayTheme from './ui/Theme';
 import MainScreen from './screens/main/MainScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import RozetkaPaySdk from 'react-native-rozetka-pay-sdk';
+import { useEffect } from 'react';
+import { showAlert } from './ui/components/ErrorAlert';
+import { RozetkaPaySdkMode } from '../../src/models/initialization/InitParameters';
+
+function initRozetkaPay() {
+  RozetkaPaySdk.init({
+    mode: RozetkaPaySdkMode.Development,
+    enableLogging: true
+  }).then(() => {
+    console.log('RozetkaPaySdk initialized successfully');
+  }).catch(error => {
+    console.error('Error initializing RozetkaPaySdk:', error);
+    showAlert({
+      message: error.message,
+      title: 'RozetkaPaySdk initialization error'
+    });
+  });
+}
 
 export default function App() {
-  return (
 
+  useEffect(() => { initRozetkaPay(); }, []);
+
+  return (
     <PaperProvider
       settings={{
         icon: props => <MaterialIcons {...props} />,
