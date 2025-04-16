@@ -5,31 +5,34 @@ import DemoButton from './components/DemoButton';
 import RozetkaPaySdk from 'react-native-rozetka-pay-sdk';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
-import type { TokenizationResult } from '../../../../src/models/tokenization/TokenizationResult';
 import { FieldRequirement } from '../../../../src/models/FieldRequirement';
-import { defaultThemeConfigurator } from '../../../../src/models/theme/ThemeConfigurator';
+import { defaultThemeConfigurator, type ThemeConfigurator } from '../../../../src/models/theme/ThemeConfigurator';
 import { defaultTokenizationFieldsParameters } from '../../../../src/models/tokenization/TokenizationParameters';
+import { tokens } from 'react-native-paper/lib/typescript/styles/themes/v3/tokens';
+import { GooglePayConfig } from '../../../../src/models/payment/GooglePayConfig';
+
+const exampleThemeConfiguration: ThemeConfigurator = {
+    ...defaultThemeConfigurator,
+    lightColorScheme: {
+        ...defaultThemeConfigurator.lightColorScheme,
+        primary: '#00A046',
+    },
+    sizes: {
+        ...defaultThemeConfigurator.sizes,
+        sheetCornerRadius: 32,
+    }
+}
 
 const handleTokenization = async () => {
     try {
-        const result: TokenizationResult = await RozetkaPaySdk.startTokenization({
+        const result = await RozetkaPaySdk.startTokenization({
             widgetKey: Credentials.widgetKey,
             fieldsParameters: {
                 ...defaultTokenizationFieldsParameters,
                 cardNameField: FieldRequirement.Optional,
                 cardholderNameField: FieldRequirement.Required,
             },
-            themeConfigurator: {
-                ...defaultThemeConfigurator,
-                lightColorScheme: {
-                    ...defaultThemeConfigurator.lightColorScheme,
-                    primary: '#00A046',
-                },
-                sizes:{
-                    ...defaultThemeConfigurator.sizes,
-                    sheetCornerRadius: 32,
-                }
-            }
+            themeConfigurator: exampleThemeConfiguration
         });
 
         switch (result.type) {
@@ -66,6 +69,66 @@ const handleTokenization = async () => {
     }
 };
 
+const handlePayment = async () => {
+    try {
+        const result = await RozetkaPaySdk.makePayment({
+            token: Credentials.devAuthToken,
+            paymentParameters: {
+                amountParameters: {
+                    amount: 12345,
+                    currencyCode: 'UAH',
+                },
+                orderId: "example_order_id",
+                allowTokenization: false,
+                googlePayConfig: GooglePayConfig.test(
+                    Credentials.googlePayMerchantId,
+                    Credentials.googlePayMerchantName
+                )
+            },
+            themeConfigurator: exampleThemeConfiguration
+        })
+
+        switch (result.type) {
+            case 'Pending':
+                console.log('Payment Pending:', result.orderId, result.paymentId);
+                showAlert({
+                    message: `Payment is pending. Order ID: ${result.orderId}, Payment ID: ${result.paymentId}`,
+                    title: 'Payment Pending',
+                });
+                break;
+            case 'Complete':
+                console.log('Payment Complete:', result.orderId, result.paymentId);
+                showAlert({
+                    message: `Payment completed successfully. Order ID: ${result.orderId}, Payment ID: ${result.paymentId}`,
+                    title: 'Payment Success',
+                });
+                break;
+            case 'Failed':
+                console.error('Payment Failed:', result.message, result.error);
+                showAlert({
+                    message: `Payment failed: ${result.message || 'Unknown error'}`,
+                    title: 'Payment Failed',
+                });
+                break;
+            case 'Cancelled':
+                console.log('Payment Cancelled');
+                break;
+            default:
+                console.error('Unknown payment result:', result);
+                showAlert({
+                    message: 'Unknown payment result.',
+                    title: 'Error',
+                });
+        }
+    } catch (error: any) {
+        console.error('Payment error:', error);
+        showAlert({
+            message: error.message || 'An unexpected error occurred.',
+            title: 'Payment Error',
+        });
+    }
+}
+
 const MainScreen = () => (
     <View style={styles.container}>
         <ScrollView style={styles.content}>
@@ -81,7 +144,7 @@ const MainScreen = () => (
                     text="Tokenize card"
                 />
                 <DemoButton
-                    onPress={() => console.log('Make a payment pressed')}
+                    onPress={handlePayment}
                     text="Make a payment"
                 />
             </View>

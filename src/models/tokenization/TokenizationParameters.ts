@@ -13,7 +13,7 @@ export const defaultTokenizationFieldsParameters: TokenizationFieldsParameters =
     cardholderNameField: FieldRequirement.None,
 };
 
-export type TokenizationParams = {
+export type StartTokenizationParams = {
     widgetKey: string;
     fieldsParameters?: typeof defaultTokenizationFieldsParameters;
     themeConfigurator?: typeof defaultThemeConfigurator;

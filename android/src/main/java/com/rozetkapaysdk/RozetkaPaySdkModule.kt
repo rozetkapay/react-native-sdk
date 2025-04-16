@@ -9,9 +9,14 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 import com.rozetkapay.sdk.RozetkaPaySdk
+import com.rozetkapay.sdk.domain.models.ClientAuthParameters
 import com.rozetkapay.sdk.domain.models.ClientWidgetParameters
+import com.rozetkapay.sdk.domain.models.payment.PaymentResult
 import com.rozetkapay.sdk.domain.models.tokenization.TokenizationResult
+import com.rozetkapay.sdk.presentation.payment.PaymentSheetContract
 import com.rozetkapay.sdk.presentation.tokenization.TokenizationSheetContract
+import com.rozetkapaysdk.converters.payment.toPaymentParameters
+import com.rozetkapaysdk.converters.payment.toWritableMap
 import com.rozetkapaysdk.converters.theme.toRozetkaPayThemeConfigurator
 import com.rozetkapaysdk.converters.toRozetkaPaySdkMode
 import com.rozetkapaysdk.converters.tokenization.toTokenizationParameters
@@ -25,16 +30,27 @@ class RozetkaPaySdkModule(
   private val tokenizationContract = TokenizationSheetContract()
   private var tokenizationCallback: ((TokenizationResult) -> Unit)? = null
 
+  private val paymentContract = PaymentSheetContract()
+  private var paymentCallback: ((PaymentResult) -> Unit)? = null
+
   override fun initialize() {
     super.initialize()
     appContext.addActivityEventListener(this)
   }
 
   override fun onActivityResult(p0: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
-    if (requestCode == TOKENIZATION_REQUEST_CODE) {
-      val result: TokenizationResult = tokenizationContract.parseResult(resultCode, data)
-      tokenizationCallback?.invoke(result)
-      tokenizationCallback = null
+    when (requestCode) {
+      TOKENIZATION_REQUEST_CODE -> {
+        val result: TokenizationResult = tokenizationContract.parseResult(resultCode, data)
+        tokenizationCallback?.invoke(result)
+        tokenizationCallback = null
+      }
+
+      PAYMENT_REQUEST_CODE -> {
+        val result: PaymentResult = paymentContract.parseResult(resultCode, data)
+        paymentCallback?.invoke(result)
+        paymentCallback = null
+      }
     }
   }
 
@@ -70,7 +86,7 @@ class RozetkaPaySdkModule(
     tokenizationCallback = {
       promise.resolve(it.toWritableMap())
     }
-    val activity = currentActivity!!
+    val activity = requireCurrentActivity()
     val intent = tokenizationContract.createIntent(
       context = activity,
       input = TokenizationSheetContract.Parameters(
@@ -82,6 +98,39 @@ class RozetkaPaySdkModule(
       )
     )
     activity.startActivityForResult(intent, TOKENIZATION_REQUEST_CODE)
+  }
+
+
+  @ReactMethod
+  fun makePayment(
+    token: String,
+    paymentParameters: ReadableMap,
+    themeConfigurator: ReadableMap,
+    promise: Promise
+  ) = protectedMethod(
+    promise = promise,
+    onError = {
+      paymentCallback = null
+    }) {
+    paymentCallback = {
+      promise.resolve(it.toWritableMap())
+    }
+    val activity = requireCurrentActivity()
+    val intent = paymentContract.createIntent(
+      context = activity,
+      input = PaymentSheetContract.Parameters(
+        clientAuthParameters = ClientAuthParameters(
+          token = token
+        ),
+        parameters = paymentParameters.toPaymentParameters(),
+        themeConfigurator = themeConfigurator.toRozetkaPayThemeConfigurator()
+      )
+    )
+    activity.startActivityForResult(intent, TOKENIZATION_REQUEST_CODE)
+  }
+
+  private fun requireCurrentActivity(): Activity {
+    return currentActivity ?: throw IllegalStateException("Current activity is null")
   }
 
   private inline fun protectedMethod(
@@ -105,5 +154,6 @@ class RozetkaPaySdkModule(
     const val NAME = "RozetkaPaySdk"
 
     private const val TOKENIZATION_REQUEST_CODE = 1001
+    private const val PAYMENT_REQUEST_CODE = 1002
   }
 }
