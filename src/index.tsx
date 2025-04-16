@@ -2,6 +2,7 @@ import { NativeModules, Platform } from 'react-native';
 import { convertToTokenizationResult } from './models/tokenization/TokenizationResultConverter';
 import type { InitParams } from './models/initialization/InitParameters';
 import { defaultTokenizationFieldsParameters, type TokenizationParams } from './models/tokenization/TokenizationParameters';
+import { defaultThemeConfigurator } from './models/theme/ThemeConfigurator';
 
 const LINKING_ERROR =
   `The package 'react-native-rozetka-pay-sdk' doesn't seem to be linked. Make sure: \n\n` +
@@ -38,9 +39,13 @@ export function init(params: InitParams): Promise<void> {
  * @param params - The parameters for tokenization.
  * @returns A promise that resolves with the tokenization result.
  */
-export function startTokenization({ widgetKey, fieldsParameters = defaultTokenizationFieldsParameters }: TokenizationParams): Promise<any> {
+export function startTokenization({
+  widgetKey,
+  fieldsParameters = defaultTokenizationFieldsParameters,
+  themeConfigurator = defaultThemeConfigurator,
+}: TokenizationParams): Promise<any> {
   return RozetkaPaySdk
-    .startTokenization(widgetKey, fieldsParameters)
+    .startTokenization(widgetKey, fieldsParameters, themeConfigurator)
     .then(convertToTokenizationResult);
 }
 

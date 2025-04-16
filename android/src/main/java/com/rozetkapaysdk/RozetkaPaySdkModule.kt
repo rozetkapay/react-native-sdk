@@ -12,6 +12,7 @@ import com.rozetkapay.sdk.RozetkaPaySdk
 import com.rozetkapay.sdk.domain.models.ClientWidgetParameters
 import com.rozetkapay.sdk.domain.models.tokenization.TokenizationResult
 import com.rozetkapay.sdk.presentation.tokenization.TokenizationSheetContract
+import com.rozetkapaysdk.converters.theme.toRozetkaPayThemeConfigurator
 import com.rozetkapaysdk.converters.toRozetkaPaySdkMode
 import com.rozetkapaysdk.converters.tokenization.toTokenizationParameters
 import com.rozetkapaysdk.converters.tokenization.toWritableMap
@@ -59,6 +60,7 @@ class RozetkaPaySdkModule(
   fun startTokenization(
     widgetKey: String,
     fieldsParameters: ReadableMap,
+    themeConfigurator: ReadableMap,
     promise: Promise
   ) = protectedMethod(
     promise = promise,
@@ -76,6 +78,7 @@ class RozetkaPaySdkModule(
           widgetKey = widgetKey,
         ),
         parameters = fieldsParameters.toTokenizationParameters(),
+        themeConfigurator = themeConfigurator.toRozetkaPayThemeConfigurator()
       )
     )
     activity.startActivityForResult(intent, TOKENIZATION_REQUEST_CODE)

@@ -1,4 +1,5 @@
 import { FieldRequirement } from "../FieldRequirement";
+import type { defaultThemeConfigurator } from "../theme/ThemeConfigurator";
 
 export type TokenizationFieldsParameters = {
     cardNameField?: FieldRequirement;
@@ -15,4 +16,5 @@ export const defaultTokenizationFieldsParameters: TokenizationFieldsParameters =
 export type TokenizationParams = {
     widgetKey: string;
     fieldsParameters?: typeof defaultTokenizationFieldsParameters;
+    themeConfigurator?: typeof defaultThemeConfigurator;
 }

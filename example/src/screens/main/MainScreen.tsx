@@ -7,15 +7,28 @@ import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
 import type { TokenizationResult } from '../../../../src/models/tokenization/TokenizationResult';
 import { FieldRequirement } from '../../../../src/models/FieldRequirement';
+import { defaultThemeConfigurator } from '../../../../src/models/theme/ThemeConfigurator';
+import { defaultTokenizationFieldsParameters } from '../../../../src/models/tokenization/TokenizationParameters';
 
 const handleTokenization = async () => {
     try {
         const result: TokenizationResult = await RozetkaPaySdk.startTokenization({
             widgetKey: Credentials.widgetKey,
             fieldsParameters: {
+                ...defaultTokenizationFieldsParameters,
                 cardNameField: FieldRequirement.Optional,
-                emailField: FieldRequirement.None,
                 cardholderNameField: FieldRequirement.Required,
+            },
+            themeConfigurator: {
+                ...defaultThemeConfigurator,
+                lightColorScheme: {
+                    ...defaultThemeConfigurator.lightColorScheme,
+                    primary: '#00A046',
+                },
+                sizes:{
+                    ...defaultThemeConfigurator.sizes,
+                    sheetCornerRadius: 32,
+                }
             }
         });
 
@@ -36,10 +49,6 @@ const handleTokenization = async () => {
                 break;
             case 'Cancelled':
                 console.log('Tokenization Cancelled');
-                showAlert({
-                    message: 'Tokenization process was cancelled.',
-                    title: 'Tokenization Cancelled',
-                });
                 break;
             default:
                 console.error('Unknown tokenization result:', result);
