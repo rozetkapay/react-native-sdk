@@ -1753,7 +1753,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RozetkaPaySdk (0.1-alpha01):
+  - RozetkaPaySdk (0.1.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2082,10 +2082,10 @@ SPEC CHECKSUMS:
   ReactCodegen: 16700ce5938fd79c1ff4c5b5735f10830f2e6bd3
   ReactCommon: 1257efa9d0b07517d8b79bb4055eaefac1204807
   RNVectorIcons: 941a39b5d3b9d8cf8ac2e2fc09b07bfafbcf9796
-  RozetkaPaySdk: 23780c27c0adf16c7ff739f8bcf9cf56c6e3c438
+  RozetkaPaySdk: 20af3b87331db993c8319e0980bd268081a12f1a
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 9773f1327b258fa449988c2e42fbb7cbdf655d96
 
 PODFILE CHECKSUM: fee18fcfa4f0e1184a17a5e20ef9cf571536458c
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

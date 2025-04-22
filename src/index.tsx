@@ -34,7 +34,10 @@ export function init(params: InitParams): Promise<void> {
   if (Platform.OS === 'android') {
     return RozetkaPaySdk.init(params.mode, params.enableLogging);
   } else {
-    throw new Error('init function is only supported on Android.');
+    // TODO: implement iOS initialization
+    return new Promise((_resolve, reject) => {
+      reject(new Error('iOS initialization is not implemented yet'));
+    });
   }
 }
 

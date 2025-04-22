@@ -8,7 +8,6 @@ import { showAlert } from '../../ui/components/ErrorAlert';
 import { FieldRequirement } from '../../../../src/models/FieldRequirement';
 import { defaultThemeConfigurator, type ThemeConfigurator } from '../../../../src/models/theme/ThemeConfigurator';
 import { defaultTokenizationFieldsParameters } from '../../../../src/models/tokenization/TokenizationParameters';
-import { tokens } from 'react-native-paper/lib/typescript/styles/themes/v3/tokens';
 import { GooglePayConfig } from '../../../../src/models/payment/GooglePayConfig';
 
 const exampleThemeConfiguration: ThemeConfigurator = {
