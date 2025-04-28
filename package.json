@@ -1,5 +1,5 @@
 {
-  "name": "@nestoleh/rozetka-pay-sdk-react-native",
+  "name": "@rozetkapay/rozetka-pay-sdk-react-native",
   "version": "0.1.1",
   "description": "RozetkaPay SDK for React Native",
   "source": "./src/index.tsx",
@@ -47,12 +47,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nestoleh/rozetka-pay-react-native-sdk"
+    "url": "https://github.com/rozetkapay/react-native-sdk"
   },
   "author": "rozetkapay <ecomsupport@rozetkapay.com> (https://rozetkapay.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nestoleh/rozetka-pay-react-native-sdk/issues"
+    "url": "https://github.com/rozetkapay/react-native-sdk/issues"
   },
   "homepage": "https://rozetkapay.com",
   "publishConfig": {

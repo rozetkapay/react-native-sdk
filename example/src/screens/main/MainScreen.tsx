@@ -2,7 +2,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
 import WelcomeCard from './components/WelcomeCard';
 import DemoButton from './components/DemoButton';
-import RozetkaPaySdk from 'react-native-rozetka-pay-sdk';
+import RozetkaPaySdk from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
 import { FieldRequirement } from '../../../../src/models/FieldRequirement';

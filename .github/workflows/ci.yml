@@ -35,7 +35,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           version_tag=v${{ env.PACKAGE_VERSION }}
-          if npm view rozetka-pay-sdk-react-native@$version_tag > /dev/null 2>&1; then
+          if npm view @rozetkapay/r@$version_tag > /dev/null 2>&1; then
             echo "Release ${version_tag} already exists."
             exit 1
           fi
@@ -69,4 +69,4 @@ jobs:
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access restricted
+        run: npm publish

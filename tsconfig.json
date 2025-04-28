@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "react-native-rozetka-pay-sdk": ["./src/index"]
+      "@rozetkapay/rozetka-pay-sdk-react-native": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

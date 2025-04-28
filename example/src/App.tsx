@@ -3,7 +3,7 @@ import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import RozetkaPayTheme from './ui/Theme';
 import MainScreen from './screens/main/MainScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import RozetkaPaySdk from 'react-native-rozetka-pay-sdk';
+import RozetkaPaySdk from '@rozetkapay/rozetka-pay-sdk-react-native';
 import { useEffect } from 'react';
 import { showAlert } from './ui/components/ErrorAlert';
 import { RozetkaPaySdkMode } from '../../src/models/initialization/InitParameters';
