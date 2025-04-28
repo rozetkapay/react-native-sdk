@@ -71,6 +71,19 @@ export function makePayment({
     .then(convertToPaymentResult);
 }
 
+export { RozetkaPaySdkMode } from './models/initialization/InitParameters';
+export type { InitParams } from './models/initialization/InitParameters';
+export type { MakePaymentParams, AmountParameters, PaymentParameters } from './models/payment/PaymentParameters';
+export { GooglePayConfig } from './models/payment/GooglePayConfig';
+export type { PaymentResult, PendingPaymentResult, CompletePaymentResult, FailedPaymentResult, CancelledPaymentResult } from './models/payment/PaymentResult';
+export { FieldRequirement } from './models/FieldRequirement';
+export type { TokenizationResult } from './models/tokenization/TokenizationResult';
+export type { TokenizationFieldsParameters, StartTokenizationParams } from './models/tokenization/TokenizationParameters';
+export { defaultTokenizationFieldsParameters } from './models/tokenization/TokenizationParameters';
+export type { DomainColorScheme, DomainSizes, ThemeConfigurator } from './models/theme/ThemeConfigurator';
+export { defaultThemeConfigurator } from './models/theme/ThemeConfigurator';
+
+
 export default {
   init,
   startTokenization,

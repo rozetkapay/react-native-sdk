@@ -5,10 +5,10 @@ import DemoButton from './components/DemoButton';
 import RozetkaPaySdk from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
-import { FieldRequirement } from '../../../../src/models/FieldRequirement';
-import { defaultThemeConfigurator, type ThemeConfigurator } from '../../../../src/models/theme/ThemeConfigurator';
-import { defaultTokenizationFieldsParameters } from '../../../../src/models/tokenization/TokenizationParameters';
-import { GooglePayConfig } from '../../../../src/models/payment/GooglePayConfig';
+import { FieldRequirement } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import { defaultThemeConfigurator, type ThemeConfigurator } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import { defaultTokenizationFieldsParameters } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import { GooglePayConfig } from '@rozetkapay/rozetka-pay-sdk-react-native';
 
 const exampleThemeConfiguration: ThemeConfigurator = {
     ...defaultThemeConfigurator,
