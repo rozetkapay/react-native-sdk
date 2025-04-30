@@ -33,11 +33,8 @@ const RozetkaPaySdk = NativeModules.RozetkaPaySdk
 export function init(params: InitParams): Promise<void> {
   if (Platform.OS === 'android') {
     return RozetkaPaySdk.init(params.mode, params.enableLogging);
-  } else {
-    // TODO: implement iOS initialization
-    return new Promise((_resolve, reject) => {
-      reject(new Error('iOS initialization is not implemented yet'));
-    });
+  } else { 
+    return RozetkaPaySdk.initialize(params.mode, params.enableLogging);
   }
 }
 
