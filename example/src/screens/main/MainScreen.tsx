@@ -2,13 +2,13 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
 import WelcomeCard from './components/WelcomeCard';
 import DemoButton from './components/DemoButton';
-import RozetkaPaySdk from '@rozetkapay/rozetka-pay-sdk-react-native';
+import RozetkaPaySdk, { defaultCardPaymentFieldsParameters } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
 import { FieldRequirement } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import { defaultThemeConfigurator, type ThemeConfigurator } from '@rozetkapay/rozetka-pay-sdk-react-native';
-import { defaultTokenizationFieldsParameters } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import { GooglePayConfig } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import { ApplePayConfig } from '../../../../src/models/payment/ApplePayConfig';
 
 const exampleThemeConfiguration: ThemeConfigurator = {
     ...defaultThemeConfigurator,
@@ -19,6 +19,7 @@ const exampleThemeConfiguration: ThemeConfigurator = {
     sizes: {
         ...defaultThemeConfigurator.sizes,
         sheetCornerRadius: 32,
+        componentCornerRadius: 16,
     }
 }
 
@@ -27,7 +28,7 @@ const handleTokenization = async () => {
         const result = await RozetkaPaySdk.startTokenization({
             widgetKey: Credentials.widgetKey,
             fieldsParameters: {
-                ...defaultTokenizationFieldsParameters,
+                ...defaultCardPaymentFieldsParameters,
                 cardNameField: FieldRequirement.Optional,
                 cardholderNameField: FieldRequirement.Required,
             },
@@ -72,6 +73,12 @@ const handlePayment = async () => {
     try {
         const result = await RozetkaPaySdk.makePayment({
             token: Credentials.devAuthToken,
+            widgetKey: Credentials.widgetKey,
+            fieldsParameters: {
+                ...defaultCardPaymentFieldsParameters,
+                cardNameField: FieldRequirement.Optional,
+                cardholderNameField: FieldRequirement.Required,
+            },
             paymentParameters: {
                 amountParameters: {
                     amount: 12345,
@@ -82,7 +89,11 @@ const handlePayment = async () => {
                 googlePayConfig: GooglePayConfig.test(
                     Credentials.googlePayMerchantId,
                     Credentials.googlePayMerchantName
-                )
+                ),
+                applePayConfig: ApplePayConfig.test(
+                    Credentials.applePayMerchantId,
+                    Credentials.applePayMerchantName
+                ),
             },
             themeConfigurator: exampleThemeConfiguration
         })

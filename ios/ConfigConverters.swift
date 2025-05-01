@@ -13,3 +13,18 @@ extension String {
         }
     }
 }
+
+extension Optional where Wrapped == String {
+    func toFieldRequirement(defaultValue: FieldRequirement = .none) -> FieldRequirement {
+        switch self?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "required":
+            return .required
+        case "optional":
+            return .optional
+        case "none":
+            return .none
+        default:
+            return defaultValue
+        }
+    }
+}
