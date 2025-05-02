@@ -75,6 +75,7 @@ export { RozetkaPaySdkMode } from './models/initialization/InitParameters';
 export type { InitParams } from './models/initialization/InitParameters';
 export type { MakePaymentParams, AmountParameters, PaymentParameters } from './models/payment/PaymentParameters';
 export { GooglePayConfig } from './models/payment/GooglePayConfig';
+export { ApplePayConfig } from './models/payment/ApplePayConfig';
 export type { PaymentResult, PendingPaymentResult, CompletePaymentResult, FailedPaymentResult, CancelledPaymentResult } from './models/payment/PaymentResult';
 export { FieldRequirement } from './models/FieldRequirement';
 export type { TokenizationResult } from './models/tokenization/TokenizationResult';
