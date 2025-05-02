@@ -104,6 +104,8 @@ class RozetkaPaySdkModule(
   @ReactMethod
   fun makePayment(
     token: String,
+    widgetKey: String,
+    fieldsParameters: ReadableMap,
     paymentParameters: ReadableMap,
     themeConfigurator: ReadableMap,
     promise: Promise
@@ -115,6 +117,7 @@ class RozetkaPaySdkModule(
     paymentCallback = {
       promise.resolve(it.toWritableMap())
     }
+    // TODO: use widgetKey and fieldsParameters
     val activity = requireCurrentActivity()
     val intent = paymentContract.createIntent(
       context = activity,

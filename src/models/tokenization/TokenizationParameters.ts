@@ -1,20 +1,9 @@
-import { FieldRequirement } from "../FieldRequirement";
+import type { defaultCardPaymentFieldsParameters } from "../CardPaymentFieldsParameters";
 import type { defaultThemeConfigurator } from "../theme/ThemeConfigurator";
 
-export type TokenizationFieldsParameters = {
-    cardNameField?: FieldRequirement;
-    emailField?: FieldRequirement;
-    cardholderNameField?: FieldRequirement;
-};
-
-export const defaultTokenizationFieldsParameters: TokenizationFieldsParameters = {
-    cardNameField: FieldRequirement.None,
-    emailField: FieldRequirement.None,
-    cardholderNameField: FieldRequirement.None,
-};
 
 export type StartTokenizationParams = {
     widgetKey: string;
-    fieldsParameters?: typeof defaultTokenizationFieldsParameters;
+    fieldsParameters?: typeof defaultCardPaymentFieldsParameters;
     themeConfigurator?: typeof defaultThemeConfigurator;
 }
