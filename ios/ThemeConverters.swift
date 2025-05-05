@@ -17,12 +17,10 @@ extension NSDictionary {
   }
   
   func toDomainSizes(defaultSizes: DomainSizes) -> DomainSizes {
-    let componentCornerRadius = CGFloat(self["componentCornerRadius"] as? Int ?? Int(defaultSizes.componentCornerRadius))
     return DomainSizes(
       sheetCornerRadius: CGFloat(self["sheetCornerRadius"] as? Int ?? Int(defaultSizes.sheetCornerRadius)),
-      componentCornerRadius: componentCornerRadius,
+      componentCornerRadius: CGFloat(self["componentCornerRadius"] as? Int ?? Int(defaultSizes.componentCornerRadius)),
       buttonCornerRadius: CGFloat(self["buttonCornerRadius"] as? Int ?? Int(defaultSizes.buttonCornerRadius)),
-      textFieldCornerRadius: componentCornerRadius,
       textFieldFrameHeight: defaultSizes.textFieldFrameHeight,
       borderWidth: CGFloat(self["borderWidth"] as? Int ?? Int(defaultSizes.borderWidth))
     )

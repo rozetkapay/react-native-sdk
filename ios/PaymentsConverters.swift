@@ -25,7 +25,7 @@ extension PaymentResult {
         "message": error.message ?? "",
         "error": error.errorDescription ?? ""
       ]
-    case .cancelled(let orderId, let paymentId):
+    case .cancelled:
       return [
         "type": "Cancelled"
       ]

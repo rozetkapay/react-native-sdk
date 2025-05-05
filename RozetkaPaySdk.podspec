@@ -17,9 +17,9 @@ Pod::Spec.new do |s|
   
   spm_dependency(
     s,
-    url: 'https://github.com/casiocompa/RozetkaPay.SDK-iOS', 
-    requirement: {kind: 'branch', branch: 'main'}, 
-    products: ['RozetkaPaySDK'] 
+    url: 'https://github.com/rozetkapay/ios-sdk', 
+    requirement: {kind: 'exactVersion', version: '0.1.1'},
+    products: ['RozetkaPaySDK']
   )
 
 # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.
