@@ -129,7 +129,7 @@ class RozetkaPaySdkModule(
         themeConfigurator = themeConfigurator.toRozetkaPayThemeConfigurator()
       )
     )
-    activity.startActivityForResult(intent, TOKENIZATION_REQUEST_CODE)
+    activity.startActivityForResult(intent, PAYMENT_REQUEST_CODE)
   }
 
   private fun requireCurrentActivity(): Activity {
