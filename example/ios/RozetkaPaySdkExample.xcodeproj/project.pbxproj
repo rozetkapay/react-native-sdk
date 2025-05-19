@@ -10,7 +10,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C6EC79EAB313EBEB235D2676 /* Pods_RozetkaPaySdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07CBA6D33C2D703D7A1B3A4 /* Pods_RozetkaPaySdkExample.framework */; };
+		C82384ED75EEA953A649C10E /* Pods_RozetkaPaySdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14211B67015C232F05FC3158 /* Pods_RozetkaPaySdkExample.framework */; };
 		E9D6AA37ADD8A56893851124 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -19,6 +19,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RozetkaPaySdkExample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RozetkaPaySdkExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RozetkaPaySdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		14211B67015C232F05FC3158 /* Pods_RozetkaPaySdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RozetkaPaySdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-RozetkaPaySdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.debug.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-RozetkaPaySdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.release.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RozetkaPaySdkExample/AppDelegate.swift; sourceTree = "<group>"; };
@@ -26,7 +27,6 @@
 		9ABED1C62DA953EA0065E7B9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
 		9ABED1C72DA953EA0065E7B9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F07CBA6D33C2D703D7A1B3A4 /* Pods_RozetkaPaySdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RozetkaPaySdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,7 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6EC79EAB313EBEB235D2676 /* Pods_RozetkaPaySdkExample.framework in Frameworks */,
+				C82384ED75EEA953A649C10E /* Pods_RozetkaPaySdkExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,7 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				F07CBA6D33C2D703D7A1B3A4 /* Pods_RozetkaPaySdkExample.framework */,
+				14211B67015C232F05FC3158 /* Pods_RozetkaPaySdkExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
