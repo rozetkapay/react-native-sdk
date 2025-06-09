@@ -10,13 +10,17 @@ import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 import com.rozetkapay.sdk.RozetkaPaySdk
 import com.rozetkapay.sdk.domain.models.ClientWidgetParameters
+import com.rozetkapay.sdk.domain.models.payment.BatchPaymentResult
 import com.rozetkapay.sdk.domain.models.payment.PaymentResult
 import com.rozetkapay.sdk.domain.models.tokenization.TokenizationResult
+import com.rozetkapay.sdk.presentation.payment.batch.BatchPaymentSheetContract
 import com.rozetkapay.sdk.presentation.payment.regular.PaymentSheetContract
 import com.rozetkapay.sdk.presentation.tokenization.TokenizationSheetContract
-import com.rozetkapaysdk.converters.payment.toClientAuthParameters
+import com.rozetkapaysdk.converters.payment.batch.toBatchPaymentParameters
+import com.rozetkapaysdk.converters.payment.batch.toWritableMap
 import com.rozetkapaysdk.converters.payment.regular.toPaymentParameters
 import com.rozetkapaysdk.converters.payment.regular.toWritableMap
+import com.rozetkapaysdk.converters.payment.toClientAuthParameters
 import com.rozetkapaysdk.converters.theme.toRozetkaPayThemeConfigurator
 import com.rozetkapaysdk.converters.toRozetkaPaySdkMode
 import com.rozetkapaysdk.converters.tokenization.toTokenizationParameters
@@ -32,6 +36,9 @@ class RozetkaPaySdkModule(
 
   private val paymentContract = PaymentSheetContract()
   private var paymentCallback: ((PaymentResult) -> Unit)? = null
+
+  private val batchPaymentContract = BatchPaymentSheetContract()
+  private var batchPaymentCallback: ((BatchPaymentResult) -> Unit)? = null
 
   override fun initialize() {
     super.initialize()
@@ -50,6 +57,12 @@ class RozetkaPaySdkModule(
         val result: PaymentResult = paymentContract.parseResult(resultCode, data)
         paymentCallback?.invoke(result)
         paymentCallback = null
+      }
+
+      BATCH_PAYMENT_REQUEST_CODE -> {
+        val result: BatchPaymentResult = batchPaymentContract.parseResult(resultCode, data)
+        batchPaymentCallback?.invoke(result)
+        batchPaymentCallback = null
       }
     }
   }
@@ -100,7 +113,6 @@ class RozetkaPaySdkModule(
     activity.startActivityForResult(intent, TOKENIZATION_REQUEST_CODE)
   }
 
-
   @ReactMethod
   fun makePayment(
     clientAuthParameters: ReadableMap,
@@ -125,6 +137,32 @@ class RozetkaPaySdkModule(
       )
     )
     activity.startActivityForResult(intent, PAYMENT_REQUEST_CODE)
+  }
+
+  @ReactMethod
+  fun makeBatchPayment(
+    clientAuthParameters: ReadableMap,
+    paymentParameters: ReadableMap,
+    themeConfigurator: ReadableMap,
+    promise: Promise
+  ) = protectedMethod(
+    promise = promise,
+    onError = {
+      batchPaymentCallback = null
+    }) {
+    batchPaymentCallback = {
+      promise.resolve(it.toWritableMap())
+    }
+    val activity = requireCurrentActivity()
+    val intent = batchPaymentContract.createIntent(
+      context = activity,
+      input = BatchPaymentSheetContract.Parameters(
+        clientAuthParameters = clientAuthParameters.toClientAuthParameters(),
+        parameters = paymentParameters.toBatchPaymentParameters(),
+        themeConfigurator = themeConfigurator.toRozetkaPayThemeConfigurator()
+      )
+    )
+    activity.startActivityForResult(intent, BATCH_PAYMENT_REQUEST_CODE)
   }
 
   private fun requireCurrentActivity(): Activity {
@@ -153,5 +191,6 @@ class RozetkaPaySdkModule(
 
     private const val TOKENIZATION_REQUEST_CODE = 1001
     private const val PAYMENT_REQUEST_CODE = 1002
+    private const val BATCH_PAYMENT_REQUEST_CODE = 1003
   }
 }

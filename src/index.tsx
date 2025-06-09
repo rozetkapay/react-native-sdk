@@ -8,6 +8,9 @@ import type { MakePaymentParams } from './models/payment/regular/PaymentParamete
 import { convertToPaymentResult } from './models/payment/regular/PaymentResultConverter';
 import type { PaymentResult } from './models/payment/regular/PaymentResult';
 import { defaultCardPaymentFieldsParameters } from './models/CardPaymentFieldsParameters';
+import type { BatchPaymentResult } from './models/payment/batch/BatchPaymentResult';
+import type { MakeBatchPaymentParams } from './models/payment/batch/BatchPaymentParameters';
+import { convertToBatchPaymentResult } from './models/payment/batch/BatchPaymentResultConverter';
 
 const LINKING_ERROR =
   `The package 'react-native-rozetka-pay-sdk' doesn't seem to be linked. Make sure: \n\n` +
@@ -69,6 +72,21 @@ export function makePayment({
     .then(convertToPaymentResult);
 }
 
+/**
+ * Starts the batch payment process
+ * @param params - The parameters for batch payment. 
+ * @returns A promise that resolves with the batch payment result.
+ */
+export function makeBatchPayment({
+  clientAuthParameters,
+  paymentParameters,
+  themeConfigurator = defaultThemeConfigurator,
+}: MakeBatchPaymentParams): Promise<BatchPaymentResult> {
+  return RozetkaPaySdk
+    .makeBatchPayment(clientAuthParameters, paymentParameters, themeConfigurator)
+    .then(convertToBatchPaymentResult);
+}
+
 export { RozetkaPaySdkMode } from './models/initialization/InitParameters';
 export type { InitParams } from './models/initialization/InitParameters';
 export type { MakePaymentParams, AmountParameters, PaymentParameters } from './models/payment/regular/PaymentParameters';
@@ -83,9 +101,13 @@ export { defaultCardPaymentFieldsParameters } from './models/CardPaymentFieldsPa
 export type { DomainColorScheme, DomainSizes, ThemeConfigurator } from './models/theme/ThemeConfigurator';
 export { defaultThemeConfigurator } from './models/theme/ThemeConfigurator';
 export { PaymentTypeConfiguration } from './models/payment/PaymentTypeConfiguration';
+export type { MakeBatchPaymentParams, BatchPaymentParameters, BatchOrder } from './models/payment/batch/BatchPaymentParameters';
+export type { BatchPaymentResult, BatchPendingPaymentResult, BatchCompletePaymentResult, BatchFailedPaymentResult, BatchCancelledPaymentResult, BatchOrderPaymentResult } from './models/payment/batch/BatchPaymentResult';
+
 
 export default {
   init,
   startTokenization,
   makePayment,
+  makeBatchPayment,
 };

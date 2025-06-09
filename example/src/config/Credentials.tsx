@@ -13,6 +13,12 @@ const Credentials = {
 
     applePayMerchantId: "merchant.RozetkaPay.Example",
     applePayMerchantName: "Rozetka Pay Demo Merchant",
+
+
+    merchantsApiKeys: [
+        "0c1b93ff-da7b-4eec-be5c-c5edd0d4fd17",
+        "ef316c93-8dd5-4d86-8366-8174880ec52c"
+    ],
 }
 
 export default Credentials;

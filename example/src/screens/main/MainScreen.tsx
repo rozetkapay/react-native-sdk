@@ -143,6 +143,89 @@ const handlePayment = async (payWithToken: boolean) => {
     }
 };
 
+const handleBatchPayment = async (payWithToken: boolean) => {
+    try {
+        const result = await RozetkaPaySdk.makeBatchPayment({
+            clientAuthParameters: {
+                token: Credentials.prodAuthToken,
+                widgetKey: Credentials.prodWidgetKey,
+            },
+            paymentParameters: {
+                currencyCode: 'UAH',
+                externalId: "example_order_id_" + new Date().getTime(),
+                orders: [
+                    {
+                        apiKey: Credentials.merchantsApiKeys[0]!!,
+                        amount: 12345,
+                        externalId: "example_order_0_id_" + new Date().getTime(),
+                        description: "Order 0 description",
+                    },
+                    {
+                        apiKey: Credentials.merchantsApiKeys[1]!!,
+                        amount: 10000,
+                        externalId: "example_order_1_id_" + new Date().getTime(),
+                        description: "Order 1 description",
+                    }
+                ],
+                paymentType: payWithToken ? PaymentTypeConfiguration.singleTokenPayment(
+                    Credentials.prod_test_card_token_1
+                ) : PaymentTypeConfiguration.regularPayment(
+                    defaultCardPaymentFieldsParameters,
+                    true,
+                    GooglePayConfig.test(
+                        Credentials.googlePayMerchantId,
+                        Credentials.googlePayMerchantName
+                    ),
+                    ApplePayConfig.test(
+                        Credentials.applePayMerchantId,
+                        Credentials.applePayMerchantName
+                    ),
+                )
+            },
+            themeConfigurator: exampleThemeConfiguration
+        });
+
+        switch (result.type) {
+            case 'Pending':
+                console.log('Batch Payment Pending:', result.externalId);
+                showAlert({
+                    message: `Batch Payment is pending. External ID: ${result.externalId}`,
+                    title: 'Batch Payment Pending',
+                });
+                break;
+            case 'Complete':
+                console.log('Batch Payment Complete:', result.externalId);
+                showAlert({
+                    message: `Batch Payment completed successfully. External ID: ${result.externalId}`,
+                    title: 'Batch Payment Success',
+                });
+                break;
+            case 'Failed':
+                console.error('Batch Payment Failed:', result.message, result.error);
+                showAlert({
+                    message: `Batch Payment failed: ${result.message || 'Unknown error'}`,
+                    title: 'Batch Payment Failed',
+                });
+                break;
+            case 'Cancelled':
+                console.log('Batch Payment Cancelled');
+                break;
+            default:
+                console.error('Unknown batch payment result:', result);
+                showAlert({
+                    message: 'Unknown batch payment result.',
+                    title: 'Error',
+                });
+        }
+    } catch (error: any) {
+        console.error('Batch payment error:', error);
+        showAlert({
+            message: error.message || 'An unexpected error occurred.',
+            title: 'Batch Payment Error',
+        });
+    }
+}
+
 const MainScreen = () => {
     const [useTokenizedCard, setUseTokenizedCard] = useState(false);
 
@@ -178,6 +261,10 @@ const MainScreen = () => {
                     <DemoButton
                         onPress={() => handlePayment(useTokenizedCard)}
                         text="Make a payment"
+                    />
+                    <DemoButton
+                        onPress={() => handleBatchPayment(useTokenizedCard)}
+                        text="Make a batch payment"
                     />
                 </View>
             </ScrollView>
