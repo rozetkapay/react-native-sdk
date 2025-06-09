@@ -9,14 +9,14 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 import com.rozetkapay.sdk.RozetkaPaySdk
-import com.rozetkapay.sdk.domain.models.ClientAuthParameters
 import com.rozetkapay.sdk.domain.models.ClientWidgetParameters
 import com.rozetkapay.sdk.domain.models.payment.PaymentResult
 import com.rozetkapay.sdk.domain.models.tokenization.TokenizationResult
-import com.rozetkapay.sdk.presentation.payment.PaymentSheetContract
+import com.rozetkapay.sdk.presentation.payment.regular.PaymentSheetContract
 import com.rozetkapay.sdk.presentation.tokenization.TokenizationSheetContract
-import com.rozetkapaysdk.converters.payment.toPaymentParameters
-import com.rozetkapaysdk.converters.payment.toWritableMap
+import com.rozetkapaysdk.converters.payment.toClientAuthParameters
+import com.rozetkapaysdk.converters.payment.regular.toPaymentParameters
+import com.rozetkapaysdk.converters.payment.regular.toWritableMap
 import com.rozetkapaysdk.converters.theme.toRozetkaPayThemeConfigurator
 import com.rozetkapaysdk.converters.toRozetkaPaySdkMode
 import com.rozetkapaysdk.converters.tokenization.toTokenizationParameters
@@ -103,9 +103,7 @@ class RozetkaPaySdkModule(
 
   @ReactMethod
   fun makePayment(
-    token: String,
-    widgetKey: String,
-    fieldsParameters: ReadableMap,
+    clientAuthParameters: ReadableMap,
     paymentParameters: ReadableMap,
     themeConfigurator: ReadableMap,
     promise: Promise
@@ -117,14 +115,11 @@ class RozetkaPaySdkModule(
     paymentCallback = {
       promise.resolve(it.toWritableMap())
     }
-    // TODO: use widgetKey and fieldsParameters
     val activity = requireCurrentActivity()
     val intent = paymentContract.createIntent(
       context = activity,
       input = PaymentSheetContract.Parameters(
-        clientAuthParameters = ClientAuthParameters(
-          token = token
-        ),
+        clientAuthParameters = clientAuthParameters.toClientAuthParameters(),
         parameters = paymentParameters.toPaymentParameters(),
         themeConfigurator = themeConfigurator.toRozetkaPayThemeConfigurator()
       )

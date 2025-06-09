@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Checkbox, Text } from 'react-native-paper';
 import WelcomeCard from './components/WelcomeCard';
 import DemoButton from './components/DemoButton';
-import RozetkaPaySdk, { defaultCardPaymentFieldsParameters } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import RozetkaPaySdk, { defaultCardPaymentFieldsParameters, PaymentTypeConfiguration } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
 import { FieldRequirement } from '@rozetkapay/rozetka-pay-sdk-react-native';
@@ -26,7 +27,7 @@ const exampleThemeConfiguration: ThemeConfigurator = {
 const handleTokenization = async () => {
     try {
         const result = await RozetkaPaySdk.startTokenization({
-            widgetKey: Credentials.widgetKey,
+            widgetKey: Credentials.prodWidgetKey,
             fieldsParameters: {
                 ...defaultCardPaymentFieldsParameters,
                 cardNameField: FieldRequirement.Optional,
@@ -69,47 +70,50 @@ const handleTokenization = async () => {
     }
 };
 
-const handlePayment = async () => {
+
+const handlePayment = async (payWithToken: boolean) => {
     try {
         const result = await RozetkaPaySdk.makePayment({
-            token: Credentials.devAuthToken,
-            widgetKey: Credentials.widgetKey,
-            fieldsParameters: {
-                ...defaultCardPaymentFieldsParameters,
-                cardNameField: FieldRequirement.Optional,
-                cardholderNameField: FieldRequirement.Required,
+            clientAuthParameters: {
+                token: Credentials.prodAuthToken,
+                widgetKey: Credentials.prodWidgetKey,
             },
             paymentParameters: {
                 amountParameters: {
                     amount: 12345,
                     currencyCode: 'UAH',
                 },
-                orderId: "example_order_id",
-                allowTokenization: false,
-                googlePayConfig: GooglePayConfig.test(
-                    Credentials.googlePayMerchantId,
-                    Credentials.googlePayMerchantName
-                ),
-                applePayConfig: ApplePayConfig.test(
-                    Credentials.applePayMerchantId,
-                    Credentials.applePayMerchantName
-                ),
+                externalId: "example_order_id_" + new Date().getTime(),
+                paymentType: payWithToken ? PaymentTypeConfiguration.singleTokenPayment(
+                    Credentials.prod_test_card_token_1
+                ) : PaymentTypeConfiguration.regularPayment(
+                    defaultCardPaymentFieldsParameters,
+                    true,
+                    GooglePayConfig.test(
+                        Credentials.googlePayMerchantId,
+                        Credentials.googlePayMerchantName
+                    ),
+                    ApplePayConfig.test(
+                        Credentials.applePayMerchantId,
+                        Credentials.applePayMerchantName
+                    ),
+                )
             },
             themeConfigurator: exampleThemeConfiguration
-        })
+        });
 
         switch (result.type) {
             case 'Pending':
-                console.log('Payment Pending:', result.orderId, result.paymentId);
+                console.log('Payment Pending:', result.externalId, result.paymentId);
                 showAlert({
-                    message: `Payment is pending. Order ID: ${result.orderId}, Payment ID: ${result.paymentId}`,
+                    message: `Payment is pending. External ID: ${result.externalId}, Payment ID: ${result.paymentId}`,
                     title: 'Payment Pending',
                 });
                 break;
             case 'Complete':
-                console.log('Payment Complete:', result.orderId, result.paymentId);
+                console.log('Payment Complete:', result.externalId, result.paymentId);
                 showAlert({
-                    message: `Payment completed successfully. Order ID: ${result.orderId}, Payment ID: ${result.paymentId}`,
+                    message: `Payment completed successfully. External ID: ${result.externalId}, Payment ID: ${result.paymentId}`,
                     title: 'Payment Success',
                 });
                 break;
@@ -137,30 +141,49 @@ const handlePayment = async () => {
             title: 'Payment Error',
         });
     }
-}
+};
 
-const MainScreen = () => (
-    <View style={styles.container}>
-        <ScrollView style={styles.content}>
-            <View style={styles.header}>
-                <Text variant="titleMedium">Rozetka Pay Demo</Text>
-                <Text variant="labelMedium">for React Native</Text>
-            </View>
-            <WelcomeCard />
-            <View style={styles.buttonsContainer}>
-                <Text variant="titleMedium" style={{ paddingBottom: 16 }}>Choose an option to try:</Text>
-                <DemoButton
-                    onPress={handleTokenization}
-                    text="Tokenize card"
-                />
-                <DemoButton
-                    onPress={handlePayment}
-                    text="Make a payment"
-                />
-            </View>
-        </ScrollView>
-    </View>
-);
+const MainScreen = () => {
+    const [useTokenizedCard, setUseTokenizedCard] = useState(false);
+
+    return (
+        <View style={styles.container}>
+            <ScrollView style={styles.content}>
+                <View style={styles.header}>
+                    <Text variant="titleMedium">Rozetka Pay Demo</Text>
+                    <Text variant="labelMedium">for React Native</Text>
+                </View>
+                <WelcomeCard />
+                <View style={styles.buttonsContainer}>
+                    <Text variant="titleMedium" style={{ paddingBottom: 16 }}>Tokenization:</Text>
+                    <DemoButton
+                        onPress={handleTokenization}
+                        text="Tokenize card"
+                    />
+                    <View
+                        style={{
+                            height: 24
+                        }}
+                    />
+                    <Text variant="titleMedium">Payments:</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Checkbox
+                            status={useTokenizedCard ? 'checked' : 'unchecked'}
+                            onPress={() => {
+                                setUseTokenizedCard(!useTokenizedCard);
+                            }}
+                        />
+                        <Text style={{ marginLeft: 2 }}>Pay with tokenized card</Text>
+                    </View>
+                    <DemoButton
+                        onPress={() => handlePayment(useTokenizedCard)}
+                        text="Make a payment"
+                    />
+                </View>
+            </ScrollView>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {

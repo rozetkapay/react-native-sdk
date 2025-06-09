@@ -1,3 +1,5 @@
+import type { TokenizedCard } from "../../tokenization/TokenizedCard";
+
 export type PaymentResult =
     | PendingPaymentResult
     | CompletePaymentResult
@@ -6,14 +8,15 @@ export type PaymentResult =
 
 export interface PendingPaymentResult {
     type: 'Pending';
-    orderId: string;
+    externalId: string;
     paymentId: string;
 }
 
 export interface CompletePaymentResult {
     type: 'Complete';
-    orderId: string;
+    externalId: string;
     paymentId: string;
+    tokenizedCard?: TokenizedCard;
 }
 
 export interface FailedPaymentResult {

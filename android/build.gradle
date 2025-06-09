@@ -79,7 +79,7 @@ def kotlin_version = getExtOrDefault("kotlinVersion")
 dependencies {
   implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation "com.github.rozetkapay:android-sdk:0.1-alpha04"
+  implementation "com.github.rozetkapay:android-sdk:0.1.1-alpha01"
   implementation "androidx.compose.ui:ui:1.7.8"
 }
 
