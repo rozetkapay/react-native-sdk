@@ -13,9 +13,13 @@ RCT_EXTERN_METHOD(startTokenization:(NSString *)widgetKey
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(makePayment:(NSString *)token
-                  widgetKey:(NSString *)widgetKey
-                  fieldsParameters:(NSDictionary *)fieldsParameters
+RCT_EXTERN_METHOD(makePayment:(NSDictionary *)clientAuthParameters
+                  paymentParameters:(NSDictionary *)paymentParameters
+                  themeConfigurator:(NSDictionary *)themeConfigurator
+                  resolver:(RCTPromiseResolveBlock)resolver
+                  rejecter:(RCTPromiseRejectBlock)rejecter)
+
+RCT_EXTERN_METHOD(makeBatchPayment:(NSDictionary *)clientAuthParameters
                   paymentParameters:(NSDictionary *)paymentParameters
                   themeConfigurator:(NSDictionary *)themeConfigurator
                   resolver:(RCTPromiseResolveBlock)resolver

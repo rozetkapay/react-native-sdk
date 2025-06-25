@@ -1,4 +1,5 @@
 import type { TokenizationResult } from "./TokenizationResult";
+import type { TokenizedCard } from "./TokenizedCard";
 
 /**
  * Converts the native result to a TokenizationResult object.
@@ -10,19 +11,7 @@ export function convertToTokenizationResult(result: any): TokenizationResult {
         case 'Complete':
             return {
                 type: 'Complete',
-                tokenizedCard: {
-                    token: result.tokenizedCard.token,
-                    name: result.tokenizedCard.name,
-                    cardInfo: result.tokenizedCard.cardInfo
-                        ? {
-                            maskedNumber: result.tokenizedCard.cardInfo.maskedNumber,
-                            paymentSystem: result.tokenizedCard.cardInfo.paymentSystem,
-                            bank: result.tokenizedCard.cardInfo.bank,
-                            isoA3Code: result.tokenizedCard.cardInfo.isoA3Code,
-                            cardType: result.tokenizedCard.cardInfo.cardType,
-                        }
-                        : undefined,
-                },
+                tokenizedCard: convertToTokenizedCard(result.tokenizedCard),
             };
         case 'Failed':
             return {
@@ -37,4 +26,20 @@ export function convertToTokenizationResult(result: any): TokenizationResult {
         default:
             throw new Error('Unknown result type from native module');
     }
+}
+
+export function convertToTokenizedCard(result: any): TokenizedCard {
+    return {
+        token: result.token,
+        name: result.name,
+        cardInfo: result.cardInfo
+            ? {
+                maskedNumber: result.cardInfo.maskedNumber,
+                paymentSystem: result.cardInfo.paymentSystem,
+                bank: result.cardInfo.bank,
+                isoA3Code: result.cardInfo.isoA3Code,
+                cardType: result.cardInfo.cardType,
+            }
+            : undefined,
+    };
 }

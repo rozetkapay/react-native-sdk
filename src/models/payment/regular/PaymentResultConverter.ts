@@ -1,4 +1,5 @@
 import type { PaymentResult } from "./PaymentResult";
+import { convertToTokenizedCard } from "../../tokenization/TokenizationResultConverter";
 
 /**
  * Converts the native result to a PaymentResult object.
@@ -10,14 +11,15 @@ export function convertToPaymentResult(result: any): PaymentResult {
         case 'Pending':
             return {
                 type: 'Pending',
-                orderId: result.orderId,
+                externalId: result.externalId,
                 paymentId: result.paymentId,
             };
         case 'Complete':
             return {
                 type: 'Complete',
-                orderId: result.orderId,
+                externalId: result.externalId,
                 paymentId: result.paymentId,
+                tokenizedCard: result.tokenizedCard ? convertToTokenizedCard(result.tokenizedCard) : undefined,
             };
         case 'Failed':
             return {
