@@ -36,6 +36,7 @@ const handleTokenization = async () => {
             themeConfigurator: exampleThemeConfiguration
         });
 
+        console.log('Tokenization result:', result);
         switch (result.type) {
             case 'Complete':
                 console.log('Tokenization Complete:', result.tokenizedCard);
@@ -102,6 +103,7 @@ const handlePayment = async (payWithToken: boolean) => {
             themeConfigurator: exampleThemeConfiguration
         });
 
+        console.log('Payment result:', result);
         switch (result.type) {
             case 'Pending':
                 console.log('Payment Pending:', result.externalId, result.paymentId);
@@ -152,7 +154,7 @@ const handleBatchPayment = async (payWithToken: boolean) => {
             },
             paymentParameters: {
                 currencyCode: 'UAH',
-                externalId: "example_order_id_" + new Date().getTime(),
+                externalId: "example_batch_id_" + new Date().getTime(),
                 orders: [
                     {
                         apiKey: Credentials.merchantsApiKeys[0]!!,
@@ -185,6 +187,7 @@ const handleBatchPayment = async (payWithToken: boolean) => {
             themeConfigurator: exampleThemeConfiguration
         });
 
+        console.log('Payment result:', result);
         switch (result.type) {
             case 'Pending':
                 console.log('Batch Payment Pending:', result.externalId);
@@ -250,11 +253,11 @@ const MainScreen = () => {
                     />
                     <Text variant="titleMedium">Payments:</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Checkbox
+                        <Checkbox.Android
                             status={useTokenizedCard ? 'checked' : 'unchecked'}
                             onPress={() => {
                                 setUseTokenizedCard(!useTokenizedCard);
-                            }}
+                            }} 
                         />
                         <Text style={{ marginLeft: 2 }}>Pay with tokenized card</Text>
                     </View>

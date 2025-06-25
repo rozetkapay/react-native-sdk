@@ -10,7 +10,9 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C82384ED75EEA953A649C10E /* Pods_RozetkaPaySdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14211B67015C232F05FC3158 /* Pods_RozetkaPaySdkExample.framework */; };
+		9AD23FC72E0C096C007E17FA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ABED1C62DA953EA0065E7B9 /* MaterialCommunityIcons.ttf */; };
+		9AD23FC82E0C096C007E17FA /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ABED1C72DA953EA0065E7B9 /* MaterialIcons.ttf */; };
+		B394D387DCC45D27BE52A2DE /* Pods_RozetkaPaySdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D6B3E5ED93EA263529A21B /* Pods_RozetkaPaySdkExample.framework */; };
 		E9D6AA37ADD8A56893851124 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -19,13 +21,13 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RozetkaPaySdkExample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RozetkaPaySdkExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RozetkaPaySdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		14211B67015C232F05FC3158 /* Pods_RozetkaPaySdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RozetkaPaySdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B4392A12AC88292D35C810B /* Pods-RozetkaPaySdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.debug.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-RozetkaPaySdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.release.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.release.xcconfig"; sourceTree = "<group>"; };
+		219320000C4B8F9C188B9D36 /* Pods-RozetkaPaySdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.debug.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.debug.xcconfig"; sourceTree = "<group>"; };
+		49D6B3E5ED93EA263529A21B /* Pods_RozetkaPaySdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RozetkaPaySdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RozetkaPaySdkExample/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RozetkaPaySdkExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9ABED1C62DA953EA0065E7B9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
 		9ABED1C72DA953EA0065E7B9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		E0988552B42EEDA43F117B39 /* Pods-RozetkaPaySdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.release.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -34,7 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C82384ED75EEA953A649C10E /* Pods_RozetkaPaySdkExample.framework in Frameworks */,
+				B394D387DCC45D27BE52A2DE /* Pods_RozetkaPaySdkExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,7 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				14211B67015C232F05FC3158 /* Pods_RozetkaPaySdkExample.framework */,
+				49D6B3E5ED93EA263529A21B /* Pods_RozetkaPaySdkExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,25 +97,17 @@
 		9ABED1B72DA9539C0065E7B9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9ABED1CB2DA953EA0065E7B9 /* Fonts */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		9ABED1CB2DA953EA0065E7B9 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
 				9ABED1C62DA953EA0065E7B9 /* MaterialCommunityIcons.ttf */,
 				9ABED1C72DA953EA0065E7B9 /* MaterialIcons.ttf */,
 			);
-			path = Fonts;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-RozetkaPaySdkExample.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-RozetkaPaySdkExample.release.xcconfig */,
+				219320000C4B8F9C188B9D36 /* Pods-RozetkaPaySdkExample.debug.xcconfig */,
+				E0988552B42EEDA43F117B39 /* Pods-RozetkaPaySdkExample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -125,13 +119,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RozetkaPaySdkExample" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				2C4EC22239DA4AAB19937E4C /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				1C03958D4F3B9AD299DFCF46 /* [CP] Embed Pods Frameworks */,
+				F0F6AAB605597337998214C0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -178,6 +172,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AD23FC72E0C096C007E17FA /* MaterialCommunityIcons.ttf in Resources */,
+				9AD23FC82E0C096C007E17FA /* MaterialIcons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				E9D6AA37ADD8A56893851124 /* PrivacyInfo.xcprivacy in Resources */,
@@ -203,7 +199,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		1C03958D4F3B9AD299DFCF46 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -220,7 +216,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		2C4EC22239DA4AAB19937E4C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -242,7 +238,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
+		F0F6AAB605597337998214C0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -275,7 +271,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-RozetkaPaySdkExample.debug.xcconfig */;
+			baseConfigurationReference = 219320000C4B8F9C188B9D36 /* Pods-RozetkaPaySdkExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -304,7 +300,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-RozetkaPaySdkExample.release.xcconfig */;
+			baseConfigurationReference = E0988552B42EEDA43F117B39 /* Pods-RozetkaPaySdkExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

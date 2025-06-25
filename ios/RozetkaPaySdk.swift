@@ -61,11 +61,9 @@ class RozetkaPaySdk: NSObject {
     }
   }
   
-  @objc(makePayment:widgetKey:fieldsParameters:paymentParameters:themeConfigurator:resolver:rejecter:)
+  @objc(makePayment:paymentParameters:themeConfigurator:resolver:rejecter:)
   func makePayment(
-    token: String,
-    widgetKey: String,
-    fieldsParameters: NSDictionary,
+    clientAuthParameters: NSDictionary,
     paymentParameters: NSDictionary,
     themeConfigurator: NSDictionary,
     resolver: @escaping RCTPromiseResolveBlock,
@@ -76,19 +74,20 @@ class RozetkaPaySdk: NSObject {
         rejecter("PAYMENT_ERROR", "Unable to find root view controller", nil)
         return
       }
-      
+      guard let client = clientAuthParameters.toClientAuthParameters() else {
+        rejecter("PAYMENT_ERROR", "Wrong auth parameters structure, required fields missed", nil)
+        return
+      }
       guard let parameters = paymentParameters.toPaymentParameters(
-        token: token,
-        widgetKey: widgetKey,
-        paymentViewParameters: fieldsParameters.toPaymentViewParameters(),
+        client: client,
         theme: themeConfigurator.toRozetkaPayThemeConfigurator()
       ) else {
-        rejecter("PAYMENT_ERROR", "Wrong parameters strcuture, required fields missed", nil)
+        rejecter("PAYMENT_ERROR", "Wrong parameters structure, required fields missed", nil)
         return
       }
       
       let payView = RozetkaPaySDK.PayView(
-        parameters: parameters,
+        paymentParameters: parameters,
         onResultCallback: { result in
           rootViewController.dismiss(animated: true) {
             resolver(result.toDictionary())
@@ -101,6 +100,48 @@ class RozetkaPaySdk: NSObject {
       rootViewController.present(hostingController, animated: true, completion: nil)
     }
   }
+  
+  @objc(makeBatchPayment:paymentParameters:themeConfigurator:resolver:rejecter:)
+  func makeBatchPayment(
+    clientAuthParameters: NSDictionary,
+    paymentParameters: NSDictionary,
+    themeConfigurator: NSDictionary,
+    resolver: @escaping RCTPromiseResolveBlock,
+    rejecter: @escaping RCTPromiseRejectBlock
+  ) {
+    DispatchQueue.main.async {
+      guard let rootViewController = UIApplication.shared.getRootViewController() else {
+        rejecter("BATCH_PAYMENT_ERROR", "Unable to find root view controller", nil)
+        return
+      }
+      guard let client = clientAuthParameters.toClientAuthParameters() else {
+        rejecter("BAtCH_PAYMENT_ERROR", "Wrong auth parameters structure, required fields missed", nil)
+        return
+      }
+      guard let parameters = paymentParameters.toBatchPaymentParameters(
+        client: client,
+        theme: themeConfigurator.toRozetkaPayThemeConfigurator()
+      ) else {
+        rejecter("BAtCH_PAYMENT_ERROR", "Wrong parameters structure, required fields missed", nil)
+        return
+      }
+      
+      let payView = RozetkaPaySDK.PayView(
+        batchPaymentParameters:  parameters,
+        onResultCallback: { result in
+          rootViewController.dismiss(animated: true) {
+            resolver(result.toDictionary())
+          }
+        }
+      )
+      
+      let hostingController = UIHostingController(rootView: payView)
+      hostingController.modalPresentationStyle = .fullScreen
+      rootViewController.present(hostingController, animated: true, completion: nil)
+    }
+  }
+  
+  
   
 }
 
