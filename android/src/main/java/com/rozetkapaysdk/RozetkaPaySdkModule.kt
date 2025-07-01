@@ -45,7 +45,7 @@ class RozetkaPaySdkModule(
     appContext.addActivityEventListener(this)
   }
 
-  override fun onActivityResult(p0: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
+  override fun onActivityResult(p0: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
     when (requestCode) {
       TOKENIZATION_REQUEST_CODE -> {
         val result: TokenizationResult = tokenizationContract.parseResult(resultCode, data)
@@ -67,7 +67,7 @@ class RozetkaPaySdkModule(
     }
   }
 
-  override fun onNewIntent(p0: Intent?) {
+  override fun onNewIntent(p0: Intent) {
     // No-op
   }
 
