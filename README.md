@@ -23,7 +23,7 @@ For more information about using and configuring the library, please visit the [
 The RozetkaPay SDK relies on native libraries for platform-specific functionality. Below are the libraries used under the hood:
 
 - **iOS**: [RozetkaPay iOS SDK](https://github.com/rozetkapay/ios-sdk)  
-  Version: `0.2.1`
+  Version: `0.2.2`
 
 - **Android**: [RozetkaPay Android SDK](https://github.com/rozetkapay/android-sdk)  
   Version: `0.2.1`

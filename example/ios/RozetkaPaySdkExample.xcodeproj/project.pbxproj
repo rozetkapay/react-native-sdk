@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		425CA688EC1DCC6356C16FD7 /* Pods_RozetkaPaySdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBD88F8CEFBBF20F37D1D9AC /* Pods_RozetkaPaySdkExample.framework */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9AD23FC72E0C096C007E17FA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ABED1C62DA953EA0065E7B9 /* MaterialCommunityIcons.ttf */; };
 		9AD23FC82E0C096C007E17FA /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9ABED1C72DA953EA0065E7B9 /* MaterialIcons.ttf */; };
-		B394D387DCC45D27BE52A2DE /* Pods_RozetkaPaySdkExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D6B3E5ED93EA263529A21B /* Pods_RozetkaPaySdkExample.framework */; };
 		E9D6AA37ADD8A56893851124 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -22,11 +22,11 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RozetkaPaySdkExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RozetkaPaySdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		219320000C4B8F9C188B9D36 /* Pods-RozetkaPaySdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.debug.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.debug.xcconfig"; sourceTree = "<group>"; };
-		49D6B3E5ED93EA263529A21B /* Pods_RozetkaPaySdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RozetkaPaySdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RozetkaPaySdkExample/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RozetkaPaySdkExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9ABED1C62DA953EA0065E7B9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
 		9ABED1C72DA953EA0065E7B9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		BBD88F8CEFBBF20F37D1D9AC /* Pods_RozetkaPaySdkExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RozetkaPaySdkExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0988552B42EEDA43F117B39 /* Pods-RozetkaPaySdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RozetkaPaySdkExample.release.xcconfig"; path = "Target Support Files/Pods-RozetkaPaySdkExample/Pods-RozetkaPaySdkExample.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -36,7 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B394D387DCC45D27BE52A2DE /* Pods_RozetkaPaySdkExample.framework in Frameworks */,
+				425CA688EC1DCC6356C16FD7 /* Pods_RozetkaPaySdkExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				49D6B3E5ED93EA263529A21B /* Pods_RozetkaPaySdkExample.framework */,
+				BBD88F8CEFBBF20F37D1D9AC /* Pods_RozetkaPaySdkExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
