@@ -13,6 +13,7 @@ fun TokenizedCard.toWritableMap(): WritableMap = Arguments.createMap().apply {
 
 fun TokenizedCard.CardInfo.toWritableMap(): WritableMap = Arguments.createMap().apply {
   putString("maskedNumber", maskedNumber)
+  putString("expiresAt", expiresAt)
   putString("paymentSystem", paymentSystem)
   putString("bank", bank)
   putString("isoA3Code", isoA3Code)

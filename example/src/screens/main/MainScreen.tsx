@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { Checkbox, Text } from 'react-native-paper';
 import WelcomeCard from './components/WelcomeCard';
 import DemoButton from './components/DemoButton';
-import RozetkaPaySdk, { defaultCardPaymentFieldsParameters, PaymentTypeConfiguration } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import RozetkaPaySdk, { defaultCardPaymentFieldsParameters, DomainTextStyle, DomainTypography, PaymentTypeConfiguration, ThemeMode } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
 import { FieldRequirement } from '@rozetkapay/rozetka-pay-sdk-react-native';
@@ -13,14 +13,30 @@ import { ApplePayConfig } from '../../../../src/models/payment/ApplePayConfig';
 
 const exampleThemeConfiguration: ThemeConfigurator = {
     ...defaultThemeConfigurator,
+    mode: ThemeMode.System,
     lightColorScheme: {
         ...defaultThemeConfigurator.lightColorScheme,
-        primary: '#00A046',
+        primary: '#FF0000',
     },
     sizes: {
         ...defaultThemeConfigurator.sizes,
         sheetCornerRadius: 32,
         componentCornerRadius: 16,
+        buttonHeight: 60,
+        googlePayButtonHeight: 50,
+        applePayButtonHeight: 40,
+        inputHeight: 48,
+    },
+    typography: {
+        ...defaultThemeConfigurator.typography,
+        fontFamily: DomainTypography.FontFamily.Default,
+        titleTextStyle: {
+            ...defaultThemeConfigurator.typography.titleTextStyle,
+            fontSize: 24,
+            lineHeight: 10, 
+            fontWeight: DomainTextStyle.FontWeight.Thin,
+        },
+
     }
 }
 
@@ -257,7 +273,7 @@ const MainScreen = () => {
                             status={useTokenizedCard ? 'checked' : 'unchecked'}
                             onPress={() => {
                                 setUseTokenizedCard(!useTokenizedCard);
-                            }} 
+                            }}
                         />
                         <Text style={{ marginLeft: 2 }}>Pay with tokenized card</Text>
                     </View>

@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
   spm_dependency(
     s,
     url: 'https://github.com/rozetkapay/ios-sdk', 
-    requirement: {kind: 'exactVersion', version: '0.2.2'},
+    requirement: {kind: 'exactVersion', version: '0.3.1'},
+    # requirement: {kind: 'branch', branch: 'dev'},
     products: ['RozetkaPaySDK']
   )
 
