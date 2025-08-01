@@ -6,6 +6,7 @@ export type TokenizedCard = {
 
 export type CardInfo = {
   maskedNumber?: string;
+  expiresAt?: string;
   paymentSystem?: string;
   bank?: string;
   isoA3Code?: string;

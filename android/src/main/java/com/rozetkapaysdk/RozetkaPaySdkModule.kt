@@ -111,6 +111,7 @@ class RozetkaPaySdkModule(
       )
     )
     activity.startActivityForResult(intent, TOKENIZATION_REQUEST_CODE)
+    activity.setRozetkaPayAnimations()
   }
 
   @ReactMethod
@@ -137,6 +138,7 @@ class RozetkaPaySdkModule(
       )
     )
     activity.startActivityForResult(intent, PAYMENT_REQUEST_CODE)
+    activity.setRozetkaPayAnimations()
   }
 
   @ReactMethod
@@ -163,6 +165,14 @@ class RozetkaPaySdkModule(
       )
     )
     activity.startActivityForResult(intent, BATCH_PAYMENT_REQUEST_CODE)
+    activity.setRozetkaPayAnimations()
+  }
+
+  private fun Activity.setRozetkaPayAnimations() {
+    overridePendingTransition(
+      com.rozetkapay.sdk.R.anim.rozetka_pay_transition_fade_in,
+      com.rozetkapay.sdk.R.anim.rozetka_pay_transition_fade_out
+    )
   }
 
   private fun requireCurrentActivity(): Activity {

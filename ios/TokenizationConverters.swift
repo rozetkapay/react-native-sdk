@@ -1,16 +1,21 @@
 import Foundation
 import RozetkaPaySDK
 
-extension Result where Success == TokenizedCard, Failure == TokenizationError {
+extension TokenizationResult {
   func toDictionary() -> [String: Any] {
     switch self {
-    case .success(let tokenizedCard):
+    case .complete(let tokenizedCard):
       return tokenizedCard.toResultDictionary()
-    case .failure(let error):
+    case .failed(let error):
       return error.toResultDictionary()
+    case .cancelled:
+        return [
+          "type": "Cancelled"
+        ]
     }
   }
 }
+
 
 extension TokenizedCard {
   
@@ -21,23 +26,24 @@ extension TokenizedCard {
     ]
   }
   
-  func toDictionary() -> [String: Any] {
+  func toDictionary() -> [String: Any?] {
     return [
       "token": self.token,
-      "name": self.name ?? "",
-      "cardInfo": self.cardInfo?.toDictionary() ?? [:]
+      "name": self.name,
+      "cardInfo": self.cardInfo.toDictionary()
     ]
   }
 }
 
 extension TokenizedCard.CardInfo {
-  func toDictionary() -> [String: Any] {
+  func toDictionary() -> [String: Any?] {
     return [
-      "maskedNumber": self.maskedNumber ?? "",
-      "paymentSystem": self.paymentSystem ?? "",
-      "bank": self.bank ?? "",
-      "isoA3Code": self.isoA3Code ?? "",
-      "cardType": self.cardType ?? ""
+      "maskedNumber": self.maskedNumber,
+      "expiresAt": self.expiresAt,
+      "paymentSystem": self.paymentSystem,
+      "bank": self.bank,
+      "isoA3Code": self.isoA3Code,
+      "cardType": self.cardType,
     ]
   }
 }

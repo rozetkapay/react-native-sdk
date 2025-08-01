@@ -35,6 +35,7 @@ export function convertToTokenizedCard(result: any): TokenizedCard {
         cardInfo: result.cardInfo
             ? {
                 maskedNumber: result.cardInfo.maskedNumber,
+                expiresAt: result.cardInfo.expiresAt,
                 paymentSystem: result.cardInfo.paymentSystem,
                 bank: result.cardInfo.bank,
                 isoA3Code: result.cardInfo.isoA3Code,

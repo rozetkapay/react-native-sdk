@@ -99,7 +99,7 @@ export type { StartTokenizationParams } from './models/tokenization/Tokenization
 export type { CardPaymentFieldsParameters } from './models/CardPaymentFieldsParameters';
 export { defaultCardPaymentFieldsParameters } from './models/CardPaymentFieldsParameters';
 export type { DomainColorScheme, DomainSizes, ThemeConfigurator } from './models/theme/ThemeConfigurator';
-export { defaultThemeConfigurator } from './models/theme/ThemeConfigurator';
+export { defaultThemeConfigurator, DomainTextStyle, DomainTypography, ThemeMode } from './models/theme/ThemeConfigurator';
 export { PaymentTypeConfiguration } from './models/payment/PaymentTypeConfiguration';
 export type { MakeBatchPaymentParams, BatchPaymentParameters, BatchOrder } from './models/payment/batch/BatchPaymentParameters';
 export type { BatchPaymentResult, BatchPendingPaymentResult, BatchCompletePaymentResult, BatchFailedPaymentResult, BatchCancelledPaymentResult, BatchOrderPaymentResult } from './models/payment/batch/BatchPaymentResult';
