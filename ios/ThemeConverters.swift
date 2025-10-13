@@ -1,5 +1,5 @@
 import Foundation
-import SwiftUICore
+import SwiftUI
 import RozetkaPaySDK
 
 
@@ -75,12 +75,10 @@ extension NSDictionary {
   private func getDomainTextStyle(name: String, fontFamily: DomainTypography.FontFamily) -> DomainTextStyle?{
     guard let textStyle = self[name] as? NSDictionary else { return nil }
     guard let fontSize = textStyle["fontSize"] as? Int else { return nil }
-    guard let lineHeight = textStyle["lineHeight"] as? Int else { return nil }
     let fontWeight = (textStyle["fontWeight"] as? String).toFontWeight()
     return DomainTextStyle(
       fontFamily: fontFamily,
       fontSize: CGFloat(fontSize),
-      lineHeight: CGFloat(lineHeight),
       fontWeight: fontWeight
     )
   }

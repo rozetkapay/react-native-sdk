@@ -176,7 +176,7 @@ class RozetkaPaySdkModule(
   }
 
   private fun requireCurrentActivity(): Activity {
-    return currentActivity ?: throw IllegalStateException("Current activity is null")
+    return appContext.currentActivity ?: throw IllegalStateException("Current activity is null")
   }
 
   private inline fun protectedMethod(
