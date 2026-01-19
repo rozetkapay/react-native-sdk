@@ -14,9 +14,12 @@ export namespace ApplePayConfig {
 
     export interface Production extends Base {
         type: 'Production';
-        supportedNetworks?: string[];
-        merchantCapabilities?: string;
+        supportedNetworks?: PaymentNetwork[];
+        merchantCapabilities?: MerchantCapabilities[];
     }
+
+    export type MerchantCapabilities = '3ds' | 'credit' | 'debit' | 'emv' | "instantFundsOut" ;
+    export type PaymentNetwork = 'visa' | 'masterCard' | 'amex' | 'discover' | "maestro";
 
     export function test(
         merchantIdentifier: string,
@@ -36,8 +39,8 @@ export namespace ApplePayConfig {
     export function production(
         merchantIdentifier: string,
         merchantName: string,
-        supportedNetworks: string[] = ['visa', 'masterCard'],
-        merchantCapabilities: string = 'capability3DS',
+        supportedNetworks: PaymentNetwork[] = ['visa', 'masterCard'],
+        merchantCapabilities: MerchantCapabilities[] = ['3ds', 'credit', 'debit'],
         currencyCode: string = 'UAH',
         countryCode: string = 'UA'
     ): Production {
