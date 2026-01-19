@@ -195,8 +195,8 @@ extension NSDictionary {
       return ApplePayConfig.Production(
         merchantIdentifier: merchantIdentifier,
         merchantName: merchantName,
-        supportedNetworks: (self["supportedNetworks"] as? [String])?.compactMap { PKPaymentNetwork(rawValue: $0) } ?? [],
-        merchantCapabilities: PKMerchantCapability(rawValue: self["merchantCapabilities"] as? UInt ?? PKMerchantCapability.capability3DS.rawValue),
+        supportedNetworks: self["supportedNetworks"] as? [String],
+        merchantCapabilities: self["merchantCapabilities"] as? [String],
         currencyCode: self["currencyCode"] as? String,
         countryCode: self["countryCode"] as? String
       )
