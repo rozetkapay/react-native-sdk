@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rozetkapay/ios-sdk",
       "state" : {
-        "revision" : "bedf0cefefcf40edd3d1543230d9f70a8b9b614a",
-        "version" : "0.3.9"
+        "revision" : "5c303b0ddab63a8aae24c5d88d59470850debaa5",
+        "version" : "0.3.10"
       }
     }
   ],
