@@ -1,6 +1,6 @@
 const Credentials = {
-    devWidgetKey: "GmX1ig/xQraUC9BAxQVIQ6Cc/me9lWbDWw5R8gYpXdaPem1389Lm57rYGymKJG+N",
-    devAuthToken: "MWE2NWY1OGEtMGZmMS00MmI2LTk0MGItZDA0MGM1MDU0ODQzOlNUVkVSRWREYnpWR01GcDFSRnB1VG5aSU5scHJiekZ4",
+    devWidgetKey: "zprAbvzoQOqwGDB1lX/ggFby0q8ekFVAoIdiYaTNBFVuhSh80qbw9jmQRYNel6A1",
+    devAuthToken: "Y2U5YWMwNmUtZmNlOC00MGVhLWIwMTgtMzA3NTk1N2ZlMDgwOk9FRkNRa3BzWTA1dVVHZG1NMGg2UTFkTGJrbE5RemRG",
 
     prodWidgetKey: "7zFsk43VTYaDZoF0iA7FLKl6l0Cj+6uMxiZmKS1guUt0XKYjSKvAOkUXFihVe60k",
     prodAuthToken: "ZWYzMTZjOTMtOGRkNS00ZDg2LTgzNjYtODE3NDg4MGVjNTJjOlUwZEhjRFZSV1dWQmNtWjRNbTB4T1ROTWNYbHNja2RG",
@@ -16,8 +16,10 @@ const Credentials = {
 
 
     merchantsApiKeys: [
-        "0c1b93ff-da7b-4eec-be5c-c5edd0d4fd17",
-        "ef316c93-8dd5-4d86-8366-8174880ec52c"
+        // "0c1b93ff-da7b-4eec-be5c-c5edd0d4fd17",
+        // "ef316c93-8dd5-4d86-8366-8174880ec52c"
+        "ce9ac06e-fce8-40ea-b018-3075957fe080",
+        "0e329f16-c617-46f1-aac2-63205153eccc",
     ],
 }
 

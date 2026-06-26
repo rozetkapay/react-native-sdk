@@ -10,7 +10,7 @@ import { RozetkaPaySdkMode } from '@rozetkapay/rozetka-pay-sdk-react-native';
 
 function initRozetkaPay() {
   RozetkaPaySdk.init({
-    mode: RozetkaPaySdkMode.Production,
+    mode: RozetkaPaySdkMode.Development,
     enableLogging: true
   }).then(() => {
     console.log('RozetkaPaySdk initialized successfully');
