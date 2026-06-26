@@ -43,7 +43,7 @@ const exampleThemeConfiguration: ThemeConfigurator = {
 const handleTokenization = async () => {
     try {
         const result = await RozetkaPaySdk.startTokenization({
-            widgetKey: Credentials.prodWidgetKey,
+            widgetKey: Credentials.devWidgetKey,
             fieldsParameters: {
                 ...defaultCardPaymentFieldsParameters,
                 cardNameField: FieldRequirement.Optional,
@@ -92,8 +92,8 @@ const handlePayment = async (payWithToken: boolean) => {
     try {
         const result = await RozetkaPaySdk.makePayment({
             clientAuthParameters: {
-                token: Credentials.prodAuthToken,
-                widgetKey: Credentials.prodWidgetKey,
+                token: Credentials.devAuthToken,
+                widgetKey: Credentials.devWidgetKey,
             },
             paymentParameters: {
                 amountParameters: {
@@ -102,7 +102,7 @@ const handlePayment = async (payWithToken: boolean) => {
                 },
                 externalId: "example_order_id_" + new Date().getTime(),
                 paymentType: payWithToken ? PaymentTypeConfiguration.singleTokenPayment(
-                    Credentials.prod_test_card_token_1
+                    Credentials.dev_test_card_token_1
                 ) : PaymentTypeConfiguration.regularPayment(
                     defaultCardPaymentFieldsParameters,
                     true,
@@ -165,8 +165,8 @@ const handleBatchPayment = async (payWithToken: boolean) => {
     try {
         const result = await RozetkaPaySdk.makeBatchPayment({
             clientAuthParameters: {
-                token: Credentials.prodAuthToken,
-                widgetKey: Credentials.prodWidgetKey,
+                token: Credentials.devAuthToken,
+                widgetKey: Credentials.devWidgetKey,
             },
             paymentParameters: {
                 currencyCode: 'UAH',
@@ -186,7 +186,7 @@ const handleBatchPayment = async (payWithToken: boolean) => {
                     }
                 ],
                 paymentType: payWithToken ? PaymentTypeConfiguration.singleTokenPayment(
-                    Credentials.prod_test_card_token_1
+                    Credentials.dev_test_card_token_1
                 ) : PaymentTypeConfiguration.regularPayment(
                     defaultCardPaymentFieldsParameters,
                     true,
