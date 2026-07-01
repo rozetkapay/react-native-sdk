@@ -122,7 +122,8 @@ extension NSDictionary {
         currencyCode: currencyCode
       ),
       externalId: externalId,
-      callbackUrl: self["callbackUrl"] as? String
+      callbackUrl: self["callbackUrl"] as? String,
+      errorDismissButtonTitle: .cancel
     )
   }
   
@@ -154,7 +155,8 @@ extension NSDictionary {
       ),
       externalId: externalId,
       callbackUrl: self["callbackUrl"] as? String,
-      orders: orders
+      orders: orders,
+      errorDismissButtonTitle: .cancel
     )
   }
   
