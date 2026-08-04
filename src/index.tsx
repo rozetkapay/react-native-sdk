@@ -156,6 +156,8 @@ export type {
   BatchCancelledPaymentResult,
   BatchOrderPaymentResult,
 } from './models/payment/batch/BatchPaymentResult';
+export { RozetkaPayGooglePayButton } from './components/RozetkaPayGooglePayButton';
+export type { RozetkaPayGooglePayButtonProps } from './components/RozetkaPayGooglePayButtonProps';
 
 export default {
   init,

@@ -10,6 +10,7 @@ import RozetkaPaySdk, {
   PaymentTypeConfiguration,
   ThemeMode,
   isGooglePayAvailable,
+  RozetkaPayGooglePayButton,
 } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
@@ -55,6 +56,11 @@ enum DemoPaymentMethod {
   GooglePay = 'GooglePay',
 }
 
+const exampleGooglePayConfig = GooglePayConfig.test(
+  Credentials.googlePayMerchantId,
+  Credentials.googlePayMerchantName
+);
+
 const buildPaymentType = (
   method: DemoPaymentMethod
 ): PaymentTypeConfiguration => {
@@ -64,21 +70,13 @@ const buildPaymentType = (
         Credentials.dev_test_card_token_1
       );
     case DemoPaymentMethod.GooglePay:
-      return PaymentTypeConfiguration.googlePayPayment(
-        GooglePayConfig.test(
-          Credentials.googlePayMerchantId,
-          Credentials.googlePayMerchantName
-        )
-      );
+      return PaymentTypeConfiguration.googlePayPayment(exampleGooglePayConfig);
     case DemoPaymentMethod.Regular:
     default:
       return PaymentTypeConfiguration.regularPayment(
         defaultCardPaymentFieldsParameters,
         true,
-        GooglePayConfig.test(
-          Credentials.googlePayMerchantId,
-          Credentials.googlePayMerchantName
-        ),
+        exampleGooglePayConfig,
         ApplePayConfig.test(
           Credentials.applePayMerchantId,
           Credentials.applePayMerchantName
@@ -269,17 +267,16 @@ const MainScreen = () => {
   const [googlePayAvailable, setGooglePayAvailable] = useState(false);
 
   useEffect(() => {
-    isGooglePayAvailable(
-      GooglePayConfig.test(
-        Credentials.googlePayMerchantId,
-        Credentials.googlePayMerchantName
-      )
-    ).then(setGooglePayAvailable);
+    isGooglePayAvailable(exampleGooglePayConfig).then(setGooglePayAvailable);
   }, []);
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.content}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <Text variant="titleMedium">Rozetka Pay Demo</Text>
           <Text variant="labelMedium">for React Native</Text>
@@ -310,9 +307,9 @@ const MainScreen = () => {
                 text="Pay with Token"
               />
               {googlePayAvailable && (
-                <DemoButton
+                <RozetkaPayGooglePayButton
+                  googlePayConfig={exampleGooglePayConfig}
                   onPress={() => handlePayment(DemoPaymentMethod.GooglePay)}
-                  text="Pay with Google Pay"
                 />
               )}
             </Card.Content>
@@ -333,11 +330,11 @@ const MainScreen = () => {
                 text="Pay with Token"
               />
               {googlePayAvailable && (
-                <DemoButton
+                <RozetkaPayGooglePayButton
+                  googlePayConfig={exampleGooglePayConfig}
                   onPress={() =>
                     handleBatchPayment(DemoPaymentMethod.GooglePay)
                   }
-                  text="Pay with Google Pay"
                 />
               )}
             </Card.Content>
@@ -359,6 +356,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
+    paddingBottom: 32,
   },
   buttonsContainer: {
     marginTop: 56,
