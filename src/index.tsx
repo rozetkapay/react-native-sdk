@@ -11,6 +11,7 @@ import { defaultCardPaymentFieldsParameters } from './models/CardPaymentFieldsPa
 import type { BatchPaymentResult } from './models/payment/batch/BatchPaymentResult';
 import type { MakeBatchPaymentParams } from './models/payment/batch/BatchPaymentParameters';
 import { convertToBatchPaymentResult } from './models/payment/batch/BatchPaymentResultConverter';
+import type { GooglePayConfig } from './models/payment/GooglePayConfig';
 
 const LINKING_ERROR =
   `The package 'react-native-rozetka-pay-sdk' doesn't seem to be linked. Make sure: \n\n` +
@@ -87,6 +88,21 @@ export function makeBatchPayment({
     .then(convertToBatchPaymentResult);
 }
 
+/**
+ * Checks whether Google Pay can be used on this device with the given configuration.
+ * Use this to decide whether to show your own Google Pay button before calling
+ * `makePayment`/`makeBatchPayment` with `PaymentTypeConfiguration.googlePayPayment(...)`.
+ *
+ * Always resolves to `false` on iOS, where Google Pay is not applicable.
+ * @param googlePayConfig - The Google Pay configuration to check availability for.
+ */
+export function isGooglePayAvailable(googlePayConfig: GooglePayConfig): Promise<boolean> {
+  if (Platform.OS !== 'android') {
+    return Promise.resolve(false);
+  }
+  return RozetkaPaySdk.isGooglePayAvailable(googlePayConfig);
+}
+
 export { RozetkaPaySdkMode } from './models/initialization/InitParameters';
 export type { InitParams } from './models/initialization/InitParameters';
 export type { MakePaymentParams, AmountParameters, PaymentParameters } from './models/payment/regular/PaymentParameters';
@@ -110,4 +126,5 @@ export default {
   startTokenization,
   makePayment,
   makeBatchPayment,
+  isGooglePayAvailable,
 };

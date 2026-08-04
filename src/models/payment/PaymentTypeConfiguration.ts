@@ -2,11 +2,11 @@ import type { defaultCardPaymentFieldsParameters } from "../CardPaymentFieldsPar
 import type { ApplePayConfig } from "./ApplePayConfig";
 import type { GooglePayConfig } from "./GooglePayConfig";
 
-export type PaymentTypeConfiguration = PaymentTypeConfiguration.RegularPayment | PaymentTypeConfiguration.SingleTokenPayment;
+export type PaymentTypeConfiguration = PaymentTypeConfiguration.RegularPayment | PaymentTypeConfiguration.SingleTokenPayment | PaymentTypeConfiguration.GooglePayPayment;
 
 export namespace PaymentTypeConfiguration {
     export interface Base {
-        type: 'RegularPayment' | 'SingleTokenPayment';
+        type: 'RegularPayment' | 'SingleTokenPayment' | 'GooglePayPayment';
     }
 
     export interface RegularPayment extends Base {
@@ -20,6 +20,16 @@ export namespace PaymentTypeConfiguration {
     export interface SingleTokenPayment extends Base {
         type: 'SingleTokenPayment';
         token: string;
+    }
+
+    /**
+     * Launches the payment flow directly into Google Pay, skipping the card-form /
+     * payment-method-selection UI. Intended to be used together with a Google Pay button
+     * rendered by the host app, gated on {@link isGooglePayAvailable}.
+     */
+    export interface GooglePayPayment extends Base {
+        type: 'GooglePayPayment';
+        googlePayConfig: GooglePayConfig;
     }
 
     export function regularPayment(
@@ -41,6 +51,13 @@ export namespace PaymentTypeConfiguration {
         return {
             type: 'SingleTokenPayment',
             token
+        };
+    }
+
+    export function googlePayPayment(googlePayConfig: GooglePayConfig): GooglePayPayment {
+        return {
+            type: 'GooglePayPayment',
+            googlePayConfig
         };
     }
 }

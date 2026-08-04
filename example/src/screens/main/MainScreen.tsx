@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Checkbox, Text } from 'react-native-paper';
+import { Card, Text } from 'react-native-paper';
 import WelcomeCard from './components/WelcomeCard';
 import DemoButton from './components/DemoButton';
-import RozetkaPaySdk, { defaultCardPaymentFieldsParameters, DomainTextStyle, DomainTypography, PaymentTypeConfiguration, ThemeMode } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import RozetkaPaySdk, { defaultCardPaymentFieldsParameters, DomainTextStyle, DomainTypography, PaymentTypeConfiguration, ThemeMode, isGooglePayAvailable } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
 import { FieldRequirement } from '@rozetkapay/rozetka-pay-sdk-react-native';
@@ -39,6 +39,42 @@ const exampleThemeConfiguration: ThemeConfigurator = {
 
     }
 }
+
+enum DemoPaymentMethod {
+    Regular = 'Regular',
+    TokenizedCard = 'TokenizedCard',
+    GooglePay = 'GooglePay',
+}
+
+const buildPaymentType = (method: DemoPaymentMethod): PaymentTypeConfiguration => {
+    switch (method) {
+        case DemoPaymentMethod.TokenizedCard:
+            return PaymentTypeConfiguration.singleTokenPayment(
+                Credentials.dev_test_card_token_1
+            );
+        case DemoPaymentMethod.GooglePay:
+            return PaymentTypeConfiguration.googlePayPayment(
+                GooglePayConfig.test(
+                    Credentials.googlePayMerchantId,
+                    Credentials.googlePayMerchantName
+                )
+            );
+        case DemoPaymentMethod.Regular:
+        default:
+            return PaymentTypeConfiguration.regularPayment(
+                defaultCardPaymentFieldsParameters,
+                true,
+                GooglePayConfig.test(
+                    Credentials.googlePayMerchantId,
+                    Credentials.googlePayMerchantName
+                ),
+                ApplePayConfig.test(
+                    Credentials.applePayMerchantId,
+                    Credentials.applePayMerchantName
+                ),
+            );
+    }
+};
 
 const handleTokenization = async () => {
     try {
@@ -88,7 +124,7 @@ const handleTokenization = async () => {
 };
 
 
-const handlePayment = async (payWithToken: boolean) => {
+const handlePayment = async (method: DemoPaymentMethod) => {
     try {
         const result = await RozetkaPaySdk.makePayment({
             clientAuthParameters: {
@@ -101,20 +137,7 @@ const handlePayment = async (payWithToken: boolean) => {
                     currencyCode: 'UAH',
                 },
                 externalId: "example_order_id_" + new Date().getTime(),
-                paymentType: payWithToken ? PaymentTypeConfiguration.singleTokenPayment(
-                    Credentials.dev_test_card_token_1
-                ) : PaymentTypeConfiguration.regularPayment(
-                    defaultCardPaymentFieldsParameters,
-                    true,
-                    GooglePayConfig.test(
-                        Credentials.googlePayMerchantId,
-                        Credentials.googlePayMerchantName
-                    ),
-                    ApplePayConfig.test(
-                        Credentials.applePayMerchantId,
-                        Credentials.applePayMerchantName
-                    ),
-                )
+                paymentType: buildPaymentType(method)
             },
             themeConfigurator: exampleThemeConfiguration
         });
@@ -161,7 +184,7 @@ const handlePayment = async (payWithToken: boolean) => {
     }
 };
 
-const handleBatchPayment = async (payWithToken: boolean) => {
+const handleBatchPayment = async (method: DemoPaymentMethod) => {
     try {
         const result = await RozetkaPaySdk.makeBatchPayment({
             clientAuthParameters: {
@@ -185,20 +208,7 @@ const handleBatchPayment = async (payWithToken: boolean) => {
                         description: "Order 1 description",
                     }
                 ],
-                paymentType: payWithToken ? PaymentTypeConfiguration.singleTokenPayment(
-                    Credentials.dev_test_card_token_1
-                ) : PaymentTypeConfiguration.regularPayment(
-                    defaultCardPaymentFieldsParameters,
-                    true,
-                    GooglePayConfig.test(
-                        Credentials.googlePayMerchantId,
-                        Credentials.googlePayMerchantName
-                    ),
-                    ApplePayConfig.test(
-                        Credentials.applePayMerchantId,
-                        Credentials.applePayMerchantName
-                    ),
-                )
+                paymentType: buildPaymentType(method)
             },
             themeConfigurator: exampleThemeConfiguration
         });
@@ -246,7 +256,16 @@ const handleBatchPayment = async (payWithToken: boolean) => {
 }
 
 const MainScreen = () => {
-    const [useTokenizedCard, setUseTokenizedCard] = useState(false);
+    const [googlePayAvailable, setGooglePayAvailable] = useState(false);
+
+    useEffect(() => {
+        isGooglePayAvailable(
+            GooglePayConfig.test(
+                Credentials.googlePayMerchantId,
+                Credentials.googlePayMerchantName
+            )
+        ).then(setGooglePayAvailable);
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -268,23 +287,44 @@ const MainScreen = () => {
                         }}
                     />
                     <Text variant="titleMedium">Payments:</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Checkbox.Android
-                            status={useTokenizedCard ? 'checked' : 'unchecked'}
-                            onPress={() => {
-                                setUseTokenizedCard(!useTokenizedCard);
-                            }}
-                        />
-                        <Text style={{ marginLeft: 2 }}>Pay with tokenized card</Text>
-                    </View>
-                    <DemoButton
-                        onPress={() => handlePayment(useTokenizedCard)}
-                        text="Make a payment"
-                    />
-                    <DemoButton
-                        onPress={() => handleBatchPayment(useTokenizedCard)}
-                        text="Make a batch payment"
-                    />
+                    <Card mode="contained" style={styles.paymentCard}>
+                        <Card.Content style={styles.paymentCardContent}>
+                            <Text variant="titleMedium" style={{ marginBottom: 12 }}>Single Payment</Text>
+                            <DemoButton
+                                onPress={() => handlePayment(DemoPaymentMethod.Regular)}
+                                text="Pay with Card"
+                            />
+                            <DemoButton
+                                onPress={() => handlePayment(DemoPaymentMethod.TokenizedCard)}
+                                text="Pay with Token"
+                            />
+                            {googlePayAvailable && (
+                                <DemoButton
+                                    onPress={() => handlePayment(DemoPaymentMethod.GooglePay)}
+                                    text="Pay with Google Pay"
+                                />
+                            )}
+                        </Card.Content>
+                    </Card>
+                    <Card mode="contained" style={styles.paymentCard}>
+                        <Card.Content style={styles.paymentCardContent}>
+                            <Text variant="titleMedium" style={{ marginBottom: 12 }}>Batch Payment</Text>
+                            <DemoButton
+                                onPress={() => handleBatchPayment(DemoPaymentMethod.Regular)}
+                                text="Pay with Card"
+                            />
+                            <DemoButton
+                                onPress={() => handleBatchPayment(DemoPaymentMethod.TokenizedCard)}
+                                text="Pay with Token"
+                            />
+                            {googlePayAvailable && (
+                                <DemoButton
+                                    onPress={() => handleBatchPayment(DemoPaymentMethod.GooglePay)}
+                                    text="Pay with Google Pay"
+                                />
+                            )}
+                        </Card.Content>
+                    </Card>
                 </View>
             </ScrollView>
         </View>
@@ -309,6 +349,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         gap: 12
+    },
+    paymentCard: {
+        width: '100%',
+    },
+    paymentCardContent: {
+        alignItems: 'center',
+        gap: 12,
     },
 });
 

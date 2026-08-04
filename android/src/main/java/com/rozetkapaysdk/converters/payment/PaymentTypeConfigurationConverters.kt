@@ -1,6 +1,7 @@
 package com.rozetkapaysdk.converters.payment
 
 import com.facebook.react.bridge.ReadableMap
+import com.rozetkapay.sdk.domain.models.payment.GooglePayPayment
 import com.rozetkapay.sdk.domain.models.payment.PaymentTypeConfiguration
 import com.rozetkapay.sdk.domain.models.payment.RegularPayment
 import com.rozetkapay.sdk.domain.models.payment.SingleTokenPayment
@@ -19,6 +20,10 @@ fun ReadableMap.toPaymentTypeConfiguration(): PaymentTypeConfiguration {
         cardFieldsParameters = requireMap("cardFieldsParameters").toCardFieldsParameters(),
         allowTokenization = getBoolean("allowTokenization"),
         googlePayConfig = getMap("googlePayConfig")?.toGooglePayConfig()
+    )
+
+    "GooglePayPayment" -> GooglePayPayment(
+        googlePayConfig = requireMap("googlePayConfig").toGooglePayConfig()
     )
 
     else -> throw IllegalArgumentException("Unknown PaymentTypeConfiguration type")

@@ -1,6 +1,6 @@
 {
   "name": "@rozetkapay/rozetka-pay-sdk-react-native",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "RozetkaPay SDK for React Native",
   "source": "./src/index.tsx",
   "main": "./lib/module/index.js",

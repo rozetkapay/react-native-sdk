@@ -26,7 +26,7 @@ The RozetkaPay SDK relies on native libraries for platform-specific functionalit
   Version: `0.3.12`
 
 - **Android**: [RozetkaPay Android SDK](https://github.com/rozetkapay/android-sdk)  
-  Version: `0.3.11`
+  Version: `0.3.13`
 
 These libraries are integrated seamlessly into the React Native SDK to provide a consistent and reliable payment experience across platforms.
 
