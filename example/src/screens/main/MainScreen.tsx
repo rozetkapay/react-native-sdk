@@ -10,7 +10,9 @@ import RozetkaPaySdk, {
   PaymentTypeConfiguration,
   ThemeMode,
   isGooglePayAvailable,
+  isApplePayAvailable,
   RozetkaPayGooglePayButton,
+  RozetkaPayApplePayButton,
 } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import Credentials from '../../config/Credentials';
 import { showAlert } from '../../ui/components/ErrorAlert';
@@ -20,7 +22,7 @@ import {
   type ThemeConfigurator,
 } from '@rozetkapay/rozetka-pay-sdk-react-native';
 import { GooglePayConfig } from '@rozetkapay/rozetka-pay-sdk-react-native';
-import { ApplePayConfig } from '../../../../src/models/payment/ApplePayConfig';
+import { ApplePayConfig } from '@rozetkapay/rozetka-pay-sdk-react-native';
 
 const exampleThemeConfiguration: ThemeConfigurator = {
   ...defaultThemeConfigurator,
@@ -54,11 +56,17 @@ enum DemoPaymentMethod {
   Regular = 'Regular',
   TokenizedCard = 'TokenizedCard',
   GooglePay = 'GooglePay',
+  ApplePay = 'ApplePay',
 }
 
 const exampleGooglePayConfig = GooglePayConfig.test(
   Credentials.googlePayMerchantId,
   Credentials.googlePayMerchantName
+);
+
+const exampleApplePayConfig = ApplePayConfig.test(
+  Credentials.applePayMerchantId,
+  Credentials.applePayMerchantName
 );
 
 const buildPaymentType = (
@@ -71,16 +79,15 @@ const buildPaymentType = (
       );
     case DemoPaymentMethod.GooglePay:
       return PaymentTypeConfiguration.googlePayPayment(exampleGooglePayConfig);
+    case DemoPaymentMethod.ApplePay:
+      return PaymentTypeConfiguration.applePayPayment(exampleApplePayConfig);
     case DemoPaymentMethod.Regular:
     default:
       return PaymentTypeConfiguration.regularPayment(
         defaultCardPaymentFieldsParameters,
         true,
         exampleGooglePayConfig,
-        ApplePayConfig.test(
-          Credentials.applePayMerchantId,
-          Credentials.applePayMerchantName
-        )
+        exampleApplePayConfig
       );
   }
 };
@@ -265,9 +272,11 @@ const handleBatchPayment = async (method: DemoPaymentMethod) => {
 
 const MainScreen = () => {
   const [googlePayAvailable, setGooglePayAvailable] = useState(false);
+  const [applePayAvailable, setApplePayAvailable] = useState(false);
 
   useEffect(() => {
     isGooglePayAvailable(exampleGooglePayConfig).then(setGooglePayAvailable);
+    isApplePayAvailable(exampleApplePayConfig).then(setApplePayAvailable);
   }, []);
 
   return (
@@ -312,6 +321,12 @@ const MainScreen = () => {
                   onPress={() => handlePayment(DemoPaymentMethod.GooglePay)}
                 />
               )}
+              {applePayAvailable && (
+                <RozetkaPayApplePayButton
+                  style={styles.applePayButton}
+                  onPress={() => handlePayment(DemoPaymentMethod.ApplePay)}
+                />
+              )}
             </Card.Content>
           </Card>
           <Card mode="contained" style={styles.paymentCard}>
@@ -335,6 +350,12 @@ const MainScreen = () => {
                   onPress={() =>
                     handleBatchPayment(DemoPaymentMethod.GooglePay)
                   }
+                />
+              )}
+              {applePayAvailable && (
+                <RozetkaPayApplePayButton
+                  style={styles.applePayButton}
+                  onPress={() => handleBatchPayment(DemoPaymentMethod.ApplePay)}
                 />
               )}
             </Card.Content>
@@ -371,6 +392,10 @@ const styles = StyleSheet.create({
   paymentCardContent: {
     alignItems: 'center',
     gap: 12,
+  },
+  applePayButton: {
+    width: 320,
+    height: 48,
   },
 });
 

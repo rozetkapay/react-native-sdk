@@ -25,6 +25,10 @@ RCT_EXTERN_METHOD(makeBatchPayment:(NSDictionary *)clientAuthParameters
                   resolver:(RCTPromiseResolveBlock)resolver
                   rejecter:(RCTPromiseRejectBlock)rejecter)
 
+RCT_EXTERN_METHOD(isApplePayAvailable:(NSDictionary *)applePayConfig
+                  resolver:(RCTPromiseResolveBlock)resolver
+                  rejecter:(RCTPromiseRejectBlock)rejecter)
+
 
 + (BOOL)requiresMainQueueSetup
 {

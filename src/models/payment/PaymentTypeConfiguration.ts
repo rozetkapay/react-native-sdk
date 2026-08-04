@@ -5,11 +5,16 @@ import type { GooglePayConfig } from './GooglePayConfig';
 export type PaymentTypeConfiguration =
   | PaymentTypeConfiguration.RegularPayment
   | PaymentTypeConfiguration.SingleTokenPayment
-  | PaymentTypeConfiguration.GooglePayPayment;
+  | PaymentTypeConfiguration.GooglePayPayment
+  | PaymentTypeConfiguration.ApplePayPayment;
 
 export namespace PaymentTypeConfiguration {
   export interface Base {
-    type: 'RegularPayment' | 'SingleTokenPayment' | 'GooglePayPayment';
+    type:
+      | 'RegularPayment'
+      | 'SingleTokenPayment'
+      | 'GooglePayPayment'
+      | 'ApplePayPayment';
   }
 
   export interface RegularPayment extends Base {
@@ -33,6 +38,16 @@ export namespace PaymentTypeConfiguration {
   export interface GooglePayPayment extends Base {
     type: 'GooglePayPayment';
     googlePayConfig: GooglePayConfig;
+  }
+
+  /**
+   * Launches the payment flow directly into Apple Pay, skipping the card-form /
+   * payment-method-selection UI. Intended to be used together with an Apple Pay button
+   * rendered by the host app, gated on {@link isApplePayAvailable}.
+   */
+  export interface ApplePayPayment extends Base {
+    type: 'ApplePayPayment';
+    applePayConfig: ApplePayConfig;
   }
 
   export function regularPayment(
@@ -63,6 +78,15 @@ export namespace PaymentTypeConfiguration {
     return {
       type: 'GooglePayPayment',
       googlePayConfig,
+    };
+  }
+
+  export function applePayPayment(
+    applePayConfig: ApplePayConfig
+  ): ApplePayPayment {
+    return {
+      type: 'ApplePayPayment',
+      applePayConfig,
     };
   }
 }

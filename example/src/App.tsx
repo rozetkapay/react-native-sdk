@@ -1,6 +1,9 @@
 import { Provider as PaperProvider, Surface } from 'react-native-paper';
 import { StatusBar, StyleSheet, View } from 'react-native';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import RozetkaPayTheme from './ui/Theme';
 import MainScreen from './screens/main/MainScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

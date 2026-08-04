@@ -6,6 +6,8 @@ export namespace ApplePayConfig {
     merchantName: string;
     currencyCode?: string;
     countryCode?: string;
+    supportedNetworks?: PaymentNetwork[];
+    merchantCapabilities?: MerchantCapabilities[];
   }
 
   export interface Test extends Base {
@@ -14,8 +16,6 @@ export namespace ApplePayConfig {
 
   export interface Production extends Base {
     type: 'Production';
-    supportedNetworks?: PaymentNetwork[];
-    merchantCapabilities?: MerchantCapabilities[];
   }
 
   export type MerchantCapabilities =
@@ -35,7 +35,9 @@ export namespace ApplePayConfig {
     merchantIdentifier: string,
     merchantName: string = 'RozetkaPay Test Merchant',
     currencyCode: string = 'UAH',
-    countryCode: string = 'UA'
+    countryCode: string = 'UA',
+    supportedNetworks: PaymentNetwork[] = ['visa', 'masterCard'],
+    merchantCapabilities: MerchantCapabilities[] = ['3ds', 'credit', 'debit']
   ): Test {
     return {
       type: 'Test',
@@ -43,6 +45,8 @@ export namespace ApplePayConfig {
       merchantName,
       currencyCode,
       countryCode,
+      supportedNetworks,
+      merchantCapabilities,
     };
   }
 

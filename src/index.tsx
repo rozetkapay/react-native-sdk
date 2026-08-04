@@ -12,6 +12,7 @@ import type { BatchPaymentResult } from './models/payment/batch/BatchPaymentResu
 import type { MakeBatchPaymentParams } from './models/payment/batch/BatchPaymentParameters';
 import { convertToBatchPaymentResult } from './models/payment/batch/BatchPaymentResultConverter';
 import type { GooglePayConfig } from './models/payment/GooglePayConfig';
+import type { ApplePayConfig } from './models/payment/ApplePayConfig';
 
 const LINKING_ERROR =
   `The package 'react-native-rozetka-pay-sdk' doesn't seem to be linked. Make sure: \n\n` +
@@ -110,6 +111,23 @@ export function isGooglePayAvailable(
   return RozetkaPaySdk.isGooglePayAvailable(googlePayConfig);
 }
 
+/**
+ * Checks whether Apple Pay can be used on this device with the given configuration.
+ * Use this to decide whether to show your own Apple Pay button before calling
+ * `makePayment`/`makeBatchPayment` with `PaymentTypeConfiguration.applePayPayment(...)`.
+ *
+ * Always resolves to `false` on Android, where Apple Pay is not applicable.
+ * @param applePayConfig - The Apple Pay configuration to check availability for.
+ */
+export function isApplePayAvailable(
+  applePayConfig: ApplePayConfig
+): Promise<boolean> {
+  if (Platform.OS !== 'ios') {
+    return Promise.resolve(false);
+  }
+  return RozetkaPaySdk.isApplePayAvailable(applePayConfig);
+}
+
 export { RozetkaPaySdkMode } from './models/initialization/InitParameters';
 export type { InitParams } from './models/initialization/InitParameters';
 export type {
@@ -158,6 +176,8 @@ export type {
 } from './models/payment/batch/BatchPaymentResult';
 export { RozetkaPayGooglePayButton } from './components/RozetkaPayGooglePayButton';
 export type { RozetkaPayGooglePayButtonProps } from './components/RozetkaPayGooglePayButtonProps';
+export { RozetkaPayApplePayButton } from './components/RozetkaPayApplePayButton';
+export type { RozetkaPayApplePayButtonProps } from './components/RozetkaPayApplePayButtonProps';
 
 export default {
   init,
@@ -165,4 +185,5 @@ export default {
   makePayment,
   makeBatchPayment,
   isGooglePayAvailable,
+  isApplePayAvailable,
 };
