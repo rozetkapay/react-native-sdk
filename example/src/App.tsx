@@ -11,26 +11,29 @@ import { RozetkaPaySdkMode } from '@rozetkapay/rozetka-pay-sdk-react-native';
 function initRozetkaPay() {
   RozetkaPaySdk.init({
     mode: RozetkaPaySdkMode.Development,
-    enableLogging: true
-  }).then(() => {
-    console.log('RozetkaPaySdk initialized successfully');
-  }).catch(error => {
-    console.error('Error initializing RozetkaPaySdk:', error);
-    showAlert({
-      message: error.message,
-      title: 'RozetkaPaySdk initialization error'
+    enableLogging: true,
+  })
+    .then(() => {
+      console.log('RozetkaPaySdk initialized successfully');
+    })
+    .catch((error) => {
+      console.error('Error initializing RozetkaPaySdk:', error);
+      showAlert({
+        message: error.message,
+        title: 'RozetkaPaySdk initialization error',
+      });
     });
-  });
 }
 
 export default function App() {
-
-  useEffect(() => { initRozetkaPay(); }, []);
+  useEffect(() => {
+    initRozetkaPay();
+  }, []);
 
   return (
     <PaperProvider
       settings={{
-        icon: props => <MaterialIcons {...props} />,
+        icon: (props) => <MaterialIcons {...props} />,
       }}
       theme={RozetkaPayTheme}
     >
@@ -38,17 +41,23 @@ export default function App() {
         backgroundColor={RozetkaPayTheme.colors.background}
         barStyle="dark-content"
       />
-      <Surface style={{ height: "100%", backgroundColor: RozetkaPayTheme.colors.background }} elevation={0}>
+      <Surface
+        style={{
+          height: '100%',
+          backgroundColor: RozetkaPayTheme.colors.background,
+        }}
+        elevation={0}
+      >
         <SafeAreaView style={styles.container}>
           <MainScreen />
         </SafeAreaView>
       </Surface>
-    </PaperProvider >
+    </PaperProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });

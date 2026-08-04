@@ -5,13 +5,13 @@ interface AlertParams {
   title?: string;
 }
 
-export function showAlert({ message, title = "Error" }: AlertParams) {
+export function showAlert({ message, title = 'Error' }: AlertParams) {
   Alert.alert(
     title,
     message,
     [
       {
-        text: "OK",
+        text: 'OK',
         onPress: () => {},
       },
     ],
