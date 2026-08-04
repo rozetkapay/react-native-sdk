@@ -1,5 +1,6 @@
 import { Provider as PaperProvider, Surface } from 'react-native-paper';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import RozetkaPayTheme from './ui/Theme';
 import MainScreen from './screens/main/MainScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -25,7 +26,9 @@ function initRozetkaPay() {
     });
 }
 
-export default function App() {
+function AppContent() {
+  const insets = useSafeAreaInsets();
+
   useEffect(() => {
     initRozetkaPay();
   }, []);
@@ -48,11 +51,29 @@ export default function App() {
         }}
         elevation={0}
       >
-        <SafeAreaView style={styles.container}>
+        <View
+          style={[
+            styles.container,
+            {
+              paddingTop: insets.top,
+              paddingBottom: insets.bottom,
+              paddingLeft: insets.left,
+              paddingRight: insets.right,
+            },
+          ]}
+        >
           <MainScreen />
-        </SafeAreaView>
+        </View>
       </Surface>
     </PaperProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <AppContent />
+    </SafeAreaProvider>
   );
 }
 
