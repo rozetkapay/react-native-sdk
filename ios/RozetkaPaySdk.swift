@@ -78,14 +78,30 @@ class RozetkaPaySdk: NSObject {
         rejecter("PAYMENT_ERROR", "Wrong auth parameters structure, required fields missed", nil)
         return
       }
+      let theme = themeConfigurator.toRozetkaPayThemeConfigurator()
+
+      if (paymentParameters["paymentType"] as? NSDictionary)?["type"] as? String == "ApplePayPayment" {
+        guard let applePayParameters = paymentParameters.toApplePayFormParameters(client: client, theme: theme) else {
+          rejecter("PAYMENT_ERROR", "Wrong Apple Pay parameters structure, required fields missed", nil)
+          return
+        }
+        RozetkaPaySDK.RozetkaPaySdk.payByApplePay(
+          parameters: applePayParameters,
+          presentingViewController: rootViewController
+        ) { result in
+          resolver(result.toDictionary())
+        }
+        return
+      }
+
       guard let parameters = paymentParameters.toPaymentParameters(
         client: client,
-        theme: themeConfigurator.toRozetkaPayThemeConfigurator()
+        theme: theme
       ) else {
         rejecter("PAYMENT_ERROR", "Wrong parameters structure, required fields missed", nil)
         return
       }
-      
+
       let payView = RozetkaPaySDK.PayView(
         paymentParameters: parameters,
         onResultCallback: { result in
@@ -94,13 +110,13 @@ class RozetkaPaySdk: NSObject {
           }
         }
       )
-      
+
       let hostingController = UIHostingController(rootView: payView)
       hostingController.modalPresentationStyle = .fullScreen
       rootViewController.present(hostingController, animated: true, completion: nil)
     }
   }
-  
+
   @objc(makeBatchPayment:paymentParameters:themeConfigurator:resolver:rejecter:)
   func makeBatchPayment(
     clientAuthParameters: NSDictionary,
@@ -118,14 +134,30 @@ class RozetkaPaySdk: NSObject {
         rejecter("BAtCH_PAYMENT_ERROR", "Wrong auth parameters structure, required fields missed", nil)
         return
       }
+      let theme = themeConfigurator.toRozetkaPayThemeConfigurator()
+
+      if (paymentParameters["paymentType"] as? NSDictionary)?["type"] as? String == "ApplePayPayment" {
+        guard let batchApplePayParameters = paymentParameters.toBatchApplePayFormParameters(client: client, theme: theme) else {
+          rejecter("BAtCH_PAYMENT_ERROR", "Wrong Apple Pay parameters structure, required fields missed", nil)
+          return
+        }
+        RozetkaPaySDK.RozetkaPaySdk.payByApplePay(
+          batchParameters: batchApplePayParameters,
+          presentingViewController: rootViewController
+        ) { result in
+          resolver(result.toDictionary())
+        }
+        return
+      }
+
       guard let parameters = paymentParameters.toBatchPaymentParameters(
         client: client,
-        theme: themeConfigurator.toRozetkaPayThemeConfigurator()
+        theme: theme
       ) else {
         rejecter("BAtCH_PAYMENT_ERROR", "Wrong parameters structure, required fields missed", nil)
         return
       }
-      
+
       let payView = RozetkaPaySDK.PayView(
         batchPaymentParameters:  parameters,
         onResultCallback: { result in
@@ -134,15 +166,28 @@ class RozetkaPaySdk: NSObject {
           }
         }
       )
-      
+
       let hostingController = UIHostingController(rootView: payView)
       hostingController.modalPresentationStyle = .fullScreen
       rootViewController.present(hostingController, animated: true, completion: nil)
     }
   }
-  
-  
-  
+
+  @objc(isApplePayAvailable:resolver:rejecter:)
+  func isApplePayAvailable(
+    applePayConfig: NSDictionary,
+    resolver: @escaping RCTPromiseResolveBlock,
+    rejecter: @escaping RCTPromiseRejectBlock
+  ) {
+    DispatchQueue.main.async {
+      guard let config = applePayConfig.toApplePayConfig() else {
+        resolver(false)
+        return
+      }
+      resolver(RozetkaPaySDK.RozetkaPaySdk.isApplePayAvailable(config: config))
+    }
+  }
+
 }
 
 extension UIApplication {

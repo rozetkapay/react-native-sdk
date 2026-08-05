@@ -1,4 +1,4 @@
 export interface ClientAuthParameters {
-    token: string;
-    widgetKey: string;
+  token: string;
+  widgetKey: string;
 }

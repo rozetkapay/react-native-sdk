@@ -1,8 +1,8 @@
 export type TokenizedCard = {
-    token: string;
-    name?: string;
-    cardInfo?: CardInfo;
-  };
+  token: string;
+  name?: string;
+  cardInfo?: CardInfo;
+};
 
 export type CardInfo = {
   maskedNumber?: string;

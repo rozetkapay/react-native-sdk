@@ -1,3 +1,3 @@
 export const RozetkaPayConfig = {
-    googlePayGateway: "evopay"
-}
+  googlePayGateway: 'evopay',
+};

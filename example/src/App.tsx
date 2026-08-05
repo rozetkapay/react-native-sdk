@@ -1,5 +1,9 @@
 import { Provider as PaperProvider, Surface } from 'react-native-paper';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import RozetkaPayTheme from './ui/Theme';
 import MainScreen from './screens/main/MainScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -11,26 +15,31 @@ import { RozetkaPaySdkMode } from '@rozetkapay/rozetka-pay-sdk-react-native';
 function initRozetkaPay() {
   RozetkaPaySdk.init({
     mode: RozetkaPaySdkMode.Development,
-    enableLogging: true
-  }).then(() => {
-    console.log('RozetkaPaySdk initialized successfully');
-  }).catch(error => {
-    console.error('Error initializing RozetkaPaySdk:', error);
-    showAlert({
-      message: error.message,
-      title: 'RozetkaPaySdk initialization error'
+    enableLogging: true,
+  })
+    .then(() => {
+      console.log('RozetkaPaySdk initialized successfully');
+    })
+    .catch((error) => {
+      console.error('Error initializing RozetkaPaySdk:', error);
+      showAlert({
+        message: error.message,
+        title: 'RozetkaPaySdk initialization error',
+      });
     });
-  });
 }
 
-export default function App() {
+function AppContent() {
+  const insets = useSafeAreaInsets();
 
-  useEffect(() => { initRozetkaPay(); }, []);
+  useEffect(() => {
+    initRozetkaPay();
+  }, []);
 
   return (
     <PaperProvider
       settings={{
-        icon: props => <MaterialIcons {...props} />,
+        icon: (props) => <MaterialIcons {...props} />,
       }}
       theme={RozetkaPayTheme}
     >
@@ -38,17 +47,41 @@ export default function App() {
         backgroundColor={RozetkaPayTheme.colors.background}
         barStyle="dark-content"
       />
-      <Surface style={{ height: "100%", backgroundColor: RozetkaPayTheme.colors.background }} elevation={0}>
-        <SafeAreaView style={styles.container}>
+      <Surface
+        style={{
+          height: '100%',
+          backgroundColor: RozetkaPayTheme.colors.background,
+        }}
+        elevation={0}
+      >
+        <View
+          style={[
+            styles.container,
+            {
+              paddingTop: insets.top,
+              paddingBottom: insets.bottom,
+              paddingLeft: insets.left,
+              paddingRight: insets.right,
+            },
+          ]}
+        >
           <MainScreen />
-        </SafeAreaView>
+        </View>
       </Surface>
-    </PaperProvider >
+    </PaperProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <AppContent />
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });

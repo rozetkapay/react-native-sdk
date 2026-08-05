@@ -2048,6 +2048,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google/react-native-make-payment@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@google/react-native-make-payment@npm:0.3.1"
+  dependencies:
+    "@types/googlepay": ^0.7.6
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: b07ed7a5e90c421cf347cb1672f2a59770049435ce49fcc08347b515c9e2ff71dc81d9e89d394354275b5fd79386cc7dc40c05b55974a973cc1acccb1eeeddfd
+  languageName: node
+  linkType: hard
+
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -3398,6 +3410,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.0
     "@eslint/js": ^9.22.0
     "@evilmartians/lefthook": ^1.5.0
+    "@google/react-native-make-payment": ^0.3.1
     "@react-native-community/cli": latest
     "@react-native-vector-icons/material-design-icons": ^12.0.1
     "@react-native/eslint-config": ^0.85.3
@@ -3539,6 +3552,13 @@ __metadata:
   version: 1.0.7
   resolution: "@types/estree@npm:1.0.7"
   checksum: d9312b7075bdd08f3c9e1bb477102f5458aaa42a8eec31a169481ce314ca99ac716645cff4fca81ea65a2294b0276a0de63159d1baca0f8e7b5050a92de950ad
+  languageName: node
+  linkType: hard
+
+"@types/googlepay@npm:^0.7.6":
+  version: 0.7.11
+  resolution: "@types/googlepay@npm:0.7.11"
+  checksum: 76515d1cc4f75f384f2175c6db02bdf4864e52a5c6505c86572ee0f3bdd43eef4c38e5761476c7e0f9bd3eaed81d2a00f8f4cb23c6234fa3b456cd93d648bbb2
   languageName: node
   linkType: hard
 
@@ -11172,6 +11192,7 @@ __metadata:
     "@babel/core": ^7.25.2
     "@babel/preset-env": ^7.25.3
     "@babel/runtime": ^7.25.0
+    "@google/react-native-make-payment": ^0.3.1
     "@react-native-community/cli": 19.1.2
     "@react-native-community/cli-platform-android": 19.1.2
     "@react-native-community/cli-platform-ios": 19.1.2

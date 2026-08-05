@@ -1,5 +1,5 @@
 export enum FieldRequirement {
-    None = "None",
-    Optional = "Optional",
-    Required = "Required"
+  None = 'None',
+  Optional = 'Optional',
+  Required = 'Required',
 }

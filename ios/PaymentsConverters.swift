@@ -190,6 +190,8 @@ extension NSDictionary {
       return ApplePayConfig.Test(
         merchantIdentifier: merchantIdentifier,
         merchantName: merchantName,
+        supportedNetworks: self["supportedNetworks"] as? [String],
+        merchantCapabilities: self["merchantCapabilities"] as? [String],
         currencyCode: self["currencyCode"] as? String,
         countryCode: self["countryCode"] as? String
       )
@@ -216,6 +218,67 @@ extension NSDictionary {
     )
   }
   
+  func toApplePayFormParameters(
+    client: ClientAuthParameters,
+    theme: RozetkaPayThemeConfigurator
+  ) -> ApplePayFormParameters? {
+    guard
+      let amountDict = self["amountParameters"] as? [String: Any],
+      let amount = amountDict["amount"] as? Int64,
+      let currencyCode = amountDict["currencyCode"] as? String,
+      let externalId = self["externalId"] as? String,
+      let applePayConfig = ((self["paymentType"] as? NSDictionary)?["applePayConfig"] as? NSDictionary)?.toApplePayConfig()
+    else {
+      return nil
+    }
+
+    return ApplePayFormParameters(
+      client: client,
+      themeConfigurator: theme,
+      applePayConfig: applePayConfig,
+      amountParameters: AmountParameters(
+        amount: amount,
+        tax: 0,
+        total: amount,
+        currencyCode: currencyCode
+      ),
+      externalId: externalId,
+      callbackUrl: self["callbackUrl"] as? String
+    )
+  }
+
+  func toBatchApplePayFormParameters(
+    client: ClientAuthParameters,
+    theme: RozetkaPayThemeConfigurator
+  ) -> BatchApplePayFormParameters? {
+    guard
+      let currencyCode = self["currencyCode"] as? String,
+      let externalId = self["externalId"] as? String,
+      let applePayConfig = ((self["paymentType"] as? NSDictionary)?["applePayConfig"] as? NSDictionary)?.toApplePayConfig(),
+      let ordersArray = (self["orders"] as? NSArray)?.compactMap({ $0 as? NSDictionary })
+    else {
+      return nil
+    }
+
+    let orders = ordersArray.compactMap({ $0.toBatchOrder() })
+    let amount = ordersArray.compactMap({ $0["amount"] as? Int64 }).reduce(0, +)
+
+    return BatchApplePayFormParameters(
+      client: client,
+      themeConfigurator: theme,
+      applePayConfig: applePayConfig,
+      amountParameters: AmountParameters(
+        amount: amount,
+        tax: 0,
+        total: amount,
+        currencyCode: currencyCode
+      ),
+      externalId: externalId,
+      callbackUrl: self["callbackUrl"] as? String,
+      orders: orders
+    )
+  }
+
   func toPaymentTypeConfiguration() -> PaymentTypeConfiguration? {
     guard let type = self["type"] as? String else { return nil }
     switch type {

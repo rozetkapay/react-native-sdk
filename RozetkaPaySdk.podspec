@@ -14,12 +14,12 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://rozetkapay.com/.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
-  
+
   spm_dependency(
     s,
-    url: 'https://github.com/rozetkapay/ios-sdk', 
-    requirement: {kind: 'exactVersion', version: '0.3.12'},
-    # requirement: {kind: 'branch', branch: 'dev'},
+    url: 'https://github.com/rozetkapay/ios-sdk',
+    requirement: {kind: 'exactVersion', version: '0.3.14'},
+#     requirement: {kind: 'branch', branch: 'dev'},
     products: ['RozetkaPaySDK']
   )
 

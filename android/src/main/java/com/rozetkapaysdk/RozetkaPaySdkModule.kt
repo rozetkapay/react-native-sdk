@@ -16,6 +16,7 @@ import com.rozetkapay.sdk.domain.models.tokenization.TokenizationResult
 import com.rozetkapay.sdk.presentation.payment.batch.BatchPaymentSheetContract
 import com.rozetkapay.sdk.presentation.payment.regular.PaymentSheetContract
 import com.rozetkapay.sdk.presentation.tokenization.TokenizationSheetContract
+import com.rozetkapaysdk.converters.payment.toGooglePayConfig
 import com.rozetkapaysdk.converters.payment.batch.toBatchPaymentParameters
 import com.rozetkapaysdk.converters.payment.batch.toWritableMap
 import com.rozetkapaysdk.converters.payment.regular.toPaymentParameters
@@ -25,6 +26,9 @@ import com.rozetkapaysdk.converters.theme.toRozetkaPayThemeConfigurator
 import com.rozetkapaysdk.converters.toRozetkaPaySdkMode
 import com.rozetkapaysdk.converters.tokenization.toTokenizationParameters
 import com.rozetkapaysdk.converters.tokenization.toWritableMap
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class RozetkaPaySdkModule(
@@ -166,6 +170,25 @@ class RozetkaPaySdkModule(
     )
     activity.startActivityForResult(intent, BATCH_PAYMENT_REQUEST_CODE)
     activity.setRozetkaPayAnimations()
+  }
+
+  @ReactMethod
+  fun isGooglePayAvailable(
+    googlePayConfig: ReadableMap,
+    promise: Promise
+  ) = protectedMethod(promise) {
+    val config = googlePayConfig.toGooglePayConfig()
+    CoroutineScope(Dispatchers.Main).launch {
+      try {
+        val available = com.rozetkapay.sdk.presentation.payment.googlepay.isGooglePayAvailable(
+          context = appContext,
+          googlePayConfig = config
+        )
+        promise.resolve(available)
+      } catch (e: Exception) {
+        promise.reject(e)
+      }
+    }
   }
 
   private fun Activity.setRozetkaPayAnimations() {
