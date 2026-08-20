@@ -60,6 +60,10 @@ app, otherwise it shows a red-box connection error instead of the UI.
   (`pay.threeDS.threeDSWebViewWrapper`) but are still exposed to
   `mobile_list_elements_on_screen` as tappable elements with labels `CONFIRM`
   and `Cancel` — no special webview handling needed, tap by coordinates as usual.
+- **Cardholder name became required in the tokenization form as of iOS SDK
+  0.3.15** (previously optional) — see [case 1](cases/01-tokenize-card.md).
+  If a future run hits `Cardholder name can't be empty` unexpectedly, check
+  whether this reverted.
 - **Payment result surfaces in two layers**, not one:
   1. On failure, the sheet first shows an in-place error screen
      (`pay.errorView`) with the raw message + `Cancel`/`Try again` buttons.

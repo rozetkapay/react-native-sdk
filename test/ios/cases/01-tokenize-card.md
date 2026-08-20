@@ -27,8 +27,10 @@ in the "Pay with Token" cases (3 and 5).
    this form.
 5. Tap field 3 (expiry), type `0632` (renders as `06/32`).
 6. Tap field 4 (CVV), type `123`.
-7. (Optional) Tap field 5 (cardholder name), type any name, e.g.
-   `Test Cardholder`. Not required for success.
+7. Tap field 5 (cardholder name), type any name, e.g. `Test Cardholder`.
+   **Required as of iOS SDK 0.3.15** — leaving it empty and tapping Save now
+   shows an inline `Cardholder name can't be empty` validation error instead
+   of submitting (previously optional).
 8. Tap **"Save card"** (`tokenization.mainButton`).
 
 ## Expected result

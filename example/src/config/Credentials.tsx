@@ -10,7 +10,7 @@ const Credentials = {
     'ZWYzMTZjOTMtOGRkNS00ZDg2LTgzNjYtODE3NDg4MGVjNTJjOlUwZEhjRFZSV1dWQmNtWjRNbTB4T1ROTWNYbHNja2RG',
 
   dev_test_card_token_1:
-    'ZTRkMjY1NDE3NzNjNDgxM2I3NmQxYzU2NzFkMjEyMjk6WUphZUlCVzA3RDR1NXR1bklR',
+    'ZWZlZmJhOTNhOWE4NGVjZTkzZTZlMzhhMzliYmY0ODE6d3A1dlhUcWNYUm9DTmhsSjhT',
   prod_test_card_token_1:
     'YjY0NTQ2YjE1ZGZjNDFhYTg4OTUzMTJmZDdhYzlkMmI6SmNVMDQ3SFpIVTJ5SEtvdUZl',
 
