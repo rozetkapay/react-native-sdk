@@ -15,6 +15,17 @@ extension String {
 }
 
 extension Optional where Wrapped == String {
+    func toRozetkaPayLanguage() -> RozetkaPayLanguage {
+        switch self?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "ukrainian":
+            return .ukrainian
+        case "english":
+            return .english
+        default:
+            return .system
+        }
+    }
+
     func toFieldRequirement(defaultValue: FieldRequirement = .none) -> FieldRequirement {
         switch self?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) {
         case "required":

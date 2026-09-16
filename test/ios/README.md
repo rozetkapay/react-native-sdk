@@ -72,3 +72,15 @@ app, otherwise it shows a red-box connection error instead of the UI.
      / `Batch Payment Failed`, with the same message). On success, the sheet
      closes immediately and only that final native alert appears (no
      intermediate screen).
+- **`mobile_type_keys` can scramble or drop characters** when typing into a
+  field immediately after tapping it (the keyboard is still animating in) —
+  observed on both a `SecureTextField`-adjacent numeric field and a plain
+  text field (e.g. `4242424242424242` landing as `4224 2424 2424 242`, or
+  `Test Cardholder` landing as `Test Cardhoer`). Always re-list elements
+  after typing and check the field's `value`/`text` against what you meant
+  to type — don't assume the call succeeded just because it returned. If it
+  scrambled, clear the field (tap the on-screen delete key once per
+  character — one tap reliably removes exactly one character) and retype;
+  a second attempt has been reliable so far. Numeric keypad digit-by-digit
+  tapping (compute key centers from a screenshot) is a slower but fully
+  reliable fallback if retyping keeps scrambling.

@@ -23,6 +23,7 @@ import com.rozetkapaysdk.converters.payment.regular.toPaymentParameters
 import com.rozetkapaysdk.converters.payment.regular.toWritableMap
 import com.rozetkapaysdk.converters.payment.toClientAuthParameters
 import com.rozetkapaysdk.converters.theme.toRozetkaPayThemeConfigurator
+import com.rozetkapaysdk.converters.toRozetkaPayLanguage
 import com.rozetkapaysdk.converters.toRozetkaPaySdkMode
 import com.rozetkapaysdk.converters.tokenization.toTokenizationParameters
 import com.rozetkapaysdk.converters.tokenization.toWritableMap
@@ -79,12 +80,14 @@ class RozetkaPaySdkModule(
   fun init(
     mode: String,
     enableLogging: Boolean,
+    apiLanguage: String?,
     promise: Promise
   ) = protectedMethod(promise) {
     RozetkaPaySdk.init(
       appContext = appContext,
       mode = mode.toRozetkaPaySdkMode(),
       enableLogging = enableLogging,
+      apiLanguage = apiLanguage.toRozetkaPayLanguage(),
     )
     promise.resolve(true)
   }

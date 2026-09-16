@@ -37,9 +37,17 @@ const RozetkaPaySdk = NativeModules.RozetkaPaySdk
  */
 export function init(params: InitParams): Promise<void> {
   if (Platform.OS === 'android') {
-    return RozetkaPaySdk.init(params.mode, params.enableLogging);
+    return RozetkaPaySdk.init(
+      params.mode,
+      params.enableLogging,
+      params.apiLanguage
+    );
   } else {
-    return RozetkaPaySdk.initialize(params.mode, params.enableLogging);
+    return RozetkaPaySdk.initialize(
+      params.mode,
+      params.enableLogging,
+      params.apiLanguage
+    );
   }
 }
 
@@ -128,7 +136,10 @@ export function isApplePayAvailable(
   return RozetkaPaySdk.isApplePayAvailable(applePayConfig);
 }
 
-export { RozetkaPaySdkMode } from './models/initialization/InitParameters';
+export {
+  RozetkaPaySdkMode,
+  RozetkaPayApiLanguage,
+} from './models/initialization/InitParameters';
 export type { InitParams } from './models/initialization/InitParameters';
 export type {
   MakePaymentParams,

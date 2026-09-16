@@ -4,6 +4,7 @@
 
 RCT_EXTERN_METHOD(initialize:(NSString *)mode
                   enableLogging:(BOOL)enableLogging
+                  apiLanguage:(NSString *)apiLanguage
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 

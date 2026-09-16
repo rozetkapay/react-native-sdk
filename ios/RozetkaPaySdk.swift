@@ -4,10 +4,11 @@ import SwiftUI
 @objc(RozetkaPaySdk)
 class RozetkaPaySdk: NSObject {
   
-  @objc(initialize:enableLogging:resolve:reject:)
+  @objc(initialize:enableLogging:apiLanguage:resolve:reject:)
   func initialize(
     mode: String,
     enableLogging: Bool,
+    apiLanguage: String?,
     resolver: @escaping RCTPromiseResolveBlock,
     rejecter: @escaping  RCTPromiseRejectBlock
   ) {
@@ -16,7 +17,8 @@ class RozetkaPaySdk: NSObject {
         RozetkaPaySDK.RozetkaPaySdk.initSdk(
           appContext: UIApplication.shared,
           mode: try mode.toRozetkaPaySdkMode(),
-          enableLogging: enableLogging
+          enableLogging: enableLogging,
+          apiLanguage: apiLanguage.toRozetkaPayLanguage()
         )
         resolver(true)
       } catch let error {
