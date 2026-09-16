@@ -99,3 +99,43 @@ Device id for `mcp__mobile__*` tools: get it fresh via
   already been used successfully before, rather than a hard Android-only
   rule — don't assume it always skips 3DS. If it does skip, that's expected;
   just verify the final `Payment Success`/`Batch Payment Success` alert.
+- **The ANR gotcha above can still hit even with the recommended boot
+  flags**, especially when the iOS Simulator + Xcode build + Gradle/Kotlin
+  daemons are all running at the same time on the host (observed load avg
+  in the 15-30 range, ~80% CPU busy). Tapping "Wait" on the ANR dialog does
+  **not** recover it — it just re-freezes. Recovery that worked: quit the
+  iOS Simulator (`osascript -e 'tell application "Simulator" to quit'`) to
+  free host CPU, tap "Close app" on the ANR dialog, then
+  `adb shell am force-stop rozetkapaysdk.example` followed by
+  `adb shell am start -n rozetkapaysdk.example/.MainActivity` — a fresh
+  process came back fully responsive. Don't bother retrying "Wait" more
+  than once; go straight to force-stop + relaunch if the app doesn't
+  recover on the first try.
+- **A tap on a text field can occasionally open a "Try out your stylus"
+  handwriting-input panel** (with a floating toolbar of
+  mic/backspace/tab/emoji/language icons down the left edge, and a "Hold
+  and drag to move toolbar" tooltip) instead of — or in addition to — the
+  normal keyboard. It intercepts typing entirely (text goes nowhere). Tap
+  the panel's own "Cancel" button to dismiss it, dismiss the tooltip via
+  its "Got it" if present, then tap the target field again on the *right*
+  side (away from the left-edge floating toolbar, which otherwise
+  overlaps/intercepts taps on fields near it) before retyping.
+- **A tap sometimes doesn't register at all the first time** (no focus
+  change, no keyboard, field stays whatever it was) — this is distinct from
+  the keyboard-shift gotcha above. If a field you just tapped isn't
+  `focused: true` on the next `mobile_list_elements_on_screen`, just tap it
+  again rather than assuming something is broken.
+- **A React Native dev-mode LogBox ("Console Error") red overlay** can pop
+  up full-screen after a failed payment (the example app calls
+  `console.error` on failure) and blocks all taps underneath it. Tap its
+  "Dismiss" button (bottom of the overlay) before continuing — "Minimize"
+  also works but leaves a floating badge that can itself intercept later
+  taps, so prefer Dismiss.
+- **The failure Snackbar can persist across screens/navigations** longer
+  than expected and overlap a button you need next (e.g. "Pay with Token"
+  under Batch Payment sitting right where the Snackbar's dismiss `×` was).
+  Take a screenshot before tapping a button near the bottom of the screen
+  if a Snackbar was recently shown, and tap the element by its listed
+  center — don't tap blind based on a remembered/previous layout, since a
+  misplaced tap here can accidentally open the wrong sheet (e.g. Tokenize)
+  instead of dismissing the toast.

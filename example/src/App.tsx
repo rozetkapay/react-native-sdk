@@ -10,12 +10,16 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useEffect } from 'react';
 import { showAlert } from './ui/components/ErrorAlert';
 import RozetkaPaySdk from '@rozetkapay/rozetka-pay-sdk-react-native';
-import { RozetkaPaySdkMode } from '@rozetkapay/rozetka-pay-sdk-react-native';
+import {
+  RozetkaPayApiLanguage,
+  RozetkaPaySdkMode,
+} from '@rozetkapay/rozetka-pay-sdk-react-native';
 
 function initRozetkaPay() {
   RozetkaPaySdk.init({
     mode: RozetkaPaySdkMode.Development,
     enableLogging: true,
+    apiLanguage: RozetkaPayApiLanguage.Ukrainian,
   })
     .then(() => {
       console.log('RozetkaPaySdk initialized successfully');
